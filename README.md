@@ -178,23 +178,6 @@ secure-ota-guardian/
 
 ---
 
-## What is Simulated vs Real Hardware
-
-| Feature | Status | Notes |
-|---|---|---|
-| Login / Auth | ✅ Real | Supabase Google OAuth |
-| Backend API | ✅ Real | Spring Boot |
-| Database | ✅ Real | PostgreSQL |
-| WebSocket | ✅ Real | STOMP/SockJS |
-| Device Telemetry | ⚡ Simulated | SimulatedDeviceAdapter |
-| OTA State Machine | ⚡ Simulated | Same logic as real firmware |
-| LED indicator | ⚡ Simulated | Mirrors what NXP LED would show |
-| OLED display | ⚡ Simulated | Mirrors NXP OLED output |
-| PIR / Radar | ⚡ Simulated | Random values |
-| Physical NXP board | 🔌 Hardware | NXP FRDM-MCXN236 required |
-| MQTT transport | 🔌 Hardware | Needs NXPDeviceAdapter |
-
----
 
 ## License
 
