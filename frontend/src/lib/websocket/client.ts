@@ -9,16 +9,26 @@ class GuardianWebSocket {
 
   async connect(onConnect?: () => void, onError?: () => void) {
     if (typeof window === 'undefined') return;
-    
-    const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'http://localhost:8080';
-    
+
+    const configuredUrl = process.env.NEXT_PUBLIC_WS_URL?.trim();
+    const rawUrl = configuredUrl || (window.location.protocol === 'http:' ? 'http://localhost:8080' : '');
+    const WS_URL = rawUrl.replace(/\/+$/, '').replace(/\/ws$/, '');
+
+    // Browsers block insecure SockJS from an HTTPS deployment. Treat the
+    // optional local backend as unavailable instead of throwing repeatedly.
+    if (!WS_URL || (window.location.protocol === 'https:' && !WS_URL.startsWith('https://'))) {
+      this._connected = false;
+      onError?.();
+      return;
+    }
+
     const { Client } = await import('@stomp/stompjs');
     const SockJS = (await import('sockjs-client')).default;
 
     if (this.client?.active) return;
 
     this.client = new Client({
-      webSocketFactory: () => new SockJS(`${WS_URL}/ws`),
+      webSocketFactory: () => new SockJS(WS_URL + '/ws'),
       reconnectDelay: 5000,
       onConnect: () => {
         this._connected = true;
