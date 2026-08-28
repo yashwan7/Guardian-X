@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: guardian_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: guardian
+      POSTGRES_USER: guardian
+      POSTGRES_PASSWORD: guardian_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U guardian -d guardian"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: guardian_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@guardianota.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  # Uncomment for local MQTT broker (for NXP device communication)
+  # mosquitto:
+  #   image: eclipse-mosquitto:2
+  #   container_name: guardian_mosquitto
+  #   ports:
+  #     - "1883:1883"
+  #     - "9001:9001"
+  #   volumes:
+  #     - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  #     - mosquitto_data:/mosquitto/data
+  #     - mosquitto_logs:/mosquitto/log
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  # mosquitto_data:
+  # mosquitto_logs:
+
+networks:
+  default:
+    name: guardian_network

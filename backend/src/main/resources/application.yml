@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: guardian-backend
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/guardian}
+    username: ${DATABASE_USERNAME:guardian}
+    password: ${DATABASE_PASSWORD:guardian_secret}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
+
+guardian:
+  jwt:
+    secret: ${SUPABASE_JWT_SECRET:fallback-secret-for-dev-only-do-not-use-in-production}
+  simulator:
+    enabled: true
+    device-id: NXP-001
+    telemetry-interval-ms: 2000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.guardianota: DEBUG
+    org.springframework.web.socket: INFO
+    org.springframework.security: WARN
