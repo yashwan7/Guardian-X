@@ -1,11 +1,217 @@
+'use client';
+
+import { useState } from 'react';
+import { useDeviceStore } from '@/stores/deviceStore';
+import {
+  Settings,
+  Cpu,
+  Radio,
+  Wifi,
+  Shield,
+  Bell,
+  RotateCcw,
+  CheckCircle2,
+  Lock,
+  Save,
+  Server,
+  Layers,
+} from 'lucide-react';
+
 export default function SettingsPage() {
+  const { hardwareAdapterMode, setHardwareAdapterMode, resetDemo, addAuditLog } =
+    useDeviceStore();
+
+  const [mqttHost, setMqttHost] = useState('localhost');
+  const [mqttPort, setMqttPort] = useState(1883);
+  const [baudRate, setBaudRate] = useState(115200);
+  const [webhookUrl, setWebhookUrl] = useState('https://hooks.slack.com/services/SEC_ALERT/GUARDIAN_OTA');
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [resetSuccess, setResetSuccess] = useState(false);
+
+  const handleSaveSettings = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaveSuccess(true);
+    addAuditLog({
+      actor: 'SecOps-Lead (admin@guardian.nxp)',
+      action: 'SYSTEM_SETTINGS_UPDATED',
+      category: 'SYSTEM',
+      target: 'Hardware & MQTT Config',
+      status: 'SUCCESS',
+      details: `Updated MQTT broker ${mqttHost}:${mqttPort} and WebSerial baud ${baudRate}`,
+    });
+    setTimeout(() => setSaveSuccess(false), 3000);
+  };
+
+  const handleResetDemo = () => {
+    resetDemo();
+    setResetSuccess(true);
+    setTimeout(() => setResetSuccess(false), 3000);
+  };
+
   return (
-    <div className="h-full flex items-center justify-center flex-col gap-4">
-      <div className="w-16 h-16 rounded bg-[#1a2740] flex items-center justify-center opacity-50">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a5568" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+    <div className="flex flex-col gap-5 animate-fade-in">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-xl font-bold text-slate-100 font-mono tracking-tight">
+              Platform Configuration &amp; Integrations
+            </h1>
+            <span className="text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-2 py-0.5 rounded font-semibold">
+              TRANSPORT: {hardwareAdapterMode}
+            </span>
+          </div>
+          <p className="text-xs text-slate-400 mt-1">
+            Hardware adapter switches, WebSerial baud rates, Mosquitto MQTT broker credentials, and demo reset controls.
+          </p>
+        </div>
       </div>
-      <h2 className="text-xl font-mono text-slate-500 uppercase tracking-widest">PHASE 2 - COMING SOON</h2>
-      <p className="text-slate-600 text-sm">The Settings module is currently under development.</p>
+
+      {saveSuccess && (
+        <div className="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <span>System configuration parameters saved successfully.</span>
+        </div>
+      )}
+
+      {resetSuccess && (
+        <div className="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <span>System demo state has been reset to baseline Golden Image v1.0.0.</span>
+        </div>
+      )}
+
+      <form onSubmit={handleSaveSettings} className="space-y-4 text-xs font-mono">
+        {/* Hardware Adapter Mode Card */}
+        <div className="p-5 rounded-2xl bg-[#060b08] border border-[#14221b] space-y-3">
+          <div className="flex items-center gap-2 text-slate-200 font-bold">
+            <Cpu className="w-4 h-4 text-emerald-400" />
+            <span>Hardware Adapter Integration Mode</span>
+          </div>
+          <p className="text-xs text-slate-400 font-sans">
+            Choose whether the control plane communicates with the simulated in-memory twin or the physical NXP FRDM-MCXN236 board.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+            {[
+              {
+                mode: 'SIMULATED' as const,
+                title: 'Simulated Device Adapter',
+                desc: 'Browser in-memory MCUboot state machine & synthetic sensor telemetry stream.',
+              },
+              {
+                mode: 'HARDWARE_WEBSERIAL' as const,
+                title: 'WebSerial Direct Sync',
+                desc: 'Direct USB UART connection (115200 baud) to physical NXP board.',
+              },
+              {
+                mode: 'HARDWARE_MQTT' as const,
+                title: 'Mosquitto MQTT Broker',
+                desc: 'Production broker gateway over guardian/device/ topics.',
+              },
+            ].map((item) => {
+              const isSelected = hardwareAdapterMode === item.mode;
+
+              return (
+                <div
+                  key={item.mode}
+                  onClick={() => setHardwareAdapterMode(item.mode)}
+                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    isSelected
+                      ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(0,245,160,0.1)]'
+                      : 'bg-[#08120d] border-[#122419] text-slate-400 hover:border-[#1c3625]'
+                  }`}
+                >
+                  <div className="font-bold text-slate-100 mb-1">{item.title}</div>
+                  <div className="text-[11px] text-slate-400 font-sans">{item.desc}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Transport & Broker Settings */}
+        <div className="p-5 rounded-2xl bg-[#060b08] border border-[#14221b] space-y-4">
+          <div className="flex items-center gap-2 text-slate-200 font-bold">
+            <Server className="w-4 h-4 text-cyan-400" />
+            <span>MQTT Broker &amp; Serial UART Parameters</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label className="text-slate-400 block mb-1">MQTT Broker Host</label>
+              <input
+                type="text"
+                value={mqttHost}
+                onChange={(e) => setMqttHost(e.target.value)}
+                className="w-full bg-[#09130e] border border-[#14261c] rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500/50"
+              />
+            </div>
+
+            <div>
+              <label className="text-slate-400 block mb-1">MQTT Broker Port</label>
+              <input
+                type="number"
+                value={mqttPort}
+                onChange={(e) => setMqttPort(parseInt(e.target.value, 10))}
+                className="w-full bg-[#09130e] border border-[#14261c] rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500/50"
+              />
+            </div>
+
+            <div>
+              <label className="text-slate-400 block mb-1">WebSerial Baud Rate</label>
+              <select
+                value={baudRate}
+                onChange={(e) => setBaudRate(parseInt(e.target.value, 10))}
+                className="w-full bg-[#09130e] border border-[#14261c] rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500/50"
+              >
+                <option value={115200}>115200 (Default NXP)</option>
+                <option value={921600}>921600 (High-Speed OTA)</option>
+                <option value={9600}>9600 (Diagnostic)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-slate-400 block mb-1">Alert Notification Webhook (Slack / Discord)</label>
+            <input
+              type="text"
+              value={webhookUrl}
+              onChange={(e) => setWebhookUrl(e.target.value)}
+              className="w-full bg-[#09130e] border border-[#14261c] rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500/50"
+            />
+          </div>
+        </div>
+
+        {/* Save & Reset Actions */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-[#060b08] border border-[#14221b]">
+          <div>
+            <span className="font-bold text-slate-200 block">Demonstration State Reset</span>
+            <span className="text-[11px] text-slate-400 font-sans">
+              Returns all fleet nodes, incidents, and audit logs to the initial baseline v1.0.0 state.
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={handleResetDemo}
+              className="px-3.5 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold transition-all flex items-center gap-1.5"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Reset Demo State</span>
+            </button>
+
+            <button
+              type="submit"
+              className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-[0_0_16px_rgba(16,185,129,0.3)] flex items-center gap-1.5"
+            >
+              <Save className="w-4 h-4" />
+              <span>Save Configuration</span>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }

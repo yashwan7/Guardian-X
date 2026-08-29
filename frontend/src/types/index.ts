@@ -1,5 +1,20 @@
 export type DeviceStatus = 'ONLINE' | 'OFFLINE' | 'UPDATING' | 'FAILED' | 'SAFE_MODE' | 'RECOVERING';
-export type UpdateState = 'IDLE' | 'UPDATE_PENDING' | 'DOWNLOADING' | 'VERIFYING' | 'INSTALLING' | 'REBOOTING' | 'HEALTH_CHECK' | 'CONFIRMED' | 'FAILED' | 'ROLLBACK' | 'SAFE_MODE' | 'RECOVERY_PENDING' | 'RECOVERY_APPROVED' | 'RECOVERING';
+export type UpdateState =
+  | 'IDLE'
+  | 'UPDATE_PENDING'
+  | 'DOWNLOADING'
+  | 'VERIFYING'
+  | 'INSTALLING'
+  | 'REBOOTING'
+  | 'HEALTH_CHECK'
+  | 'CONFIRMED'
+  | 'FAILED'
+  | 'ROLLBACK'
+  | 'SAFE_MODE'
+  | 'RECOVERY_PENDING'
+  | 'RECOVERY_APPROVED'
+  | 'RECOVERING';
+
 export type ActiveBank = 'A' | 'B';
 export type LEDColor = 'GREEN' | 'YELLOW' | 'BLUE' | 'RED' | 'OFF';
 export type EventSeverity = 'INFO' | 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
@@ -31,6 +46,13 @@ export interface Device {
   rollbackCount: number;
   targetHardware: string;
   isSimulated: boolean;
+  ipAddress?: string;
+  macAddress?: string;
+  rssi?: number;
+  location?: string;
+  bootloaderVersion?: string;
+  flashOffsetBankA?: string;
+  flashOffsetBankB?: string;
 }
 
 export interface FirmwareRelease {
@@ -48,6 +70,9 @@ export interface FirmwareRelease {
   description: string;
   healthGatePasses: boolean;
   isBreakingDemo: boolean;
+  fileSizeKb?: number;
+  signedBy?: string;
+  changelog?: string[];
 }
 
 export interface FleetSummary {
@@ -87,4 +112,87 @@ export interface TelemetryPayload {
   uptime: number;
   updateState: UpdateState;
   oledLines: string[];
+}
+
+export type RolloutStrategy = 'CANARY' | 'LINEAR' | 'IMMEDIATE' | 'BLUE_GREEN';
+export type RolloutStatus = 'PLANNED' | 'IN_PROGRESS' | 'PAUSED' | 'COMPLETED' | 'ABORTED';
+
+export interface RolloutCampaign {
+  id: string;
+  name: string;
+  firmwareId: string;
+  firmwareVersion: string;
+  targetGroup: string;
+  strategy: RolloutStrategy;
+  status: RolloutStatus;
+  currentStage: number;
+  totalStages: number;
+  targetCount: number;
+  completedCount: number;
+  failedCount: number;
+  safeModeCount: number;
+  failureThresholdPercent: number;
+  soakTimeSeconds: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SecurityIncident {
+  id: string;
+  deviceId: string;
+  title: string;
+  attackVector: string;
+  severity: EventSeverity;
+  status: 'OPEN' | 'INVESTIGATING' | 'MITIGATED' | 'RESOLVED';
+  timestamp: string;
+  details: string;
+  mitigation: string;
+  signatureStatus?: SignatureStatus;
+  hashMismatch?: boolean;
+}
+
+export interface AuditLog {
+  id: string;
+  timestamp: string;
+  actor: string;
+  action: string;
+  category: 'AUTH' | 'DEPLOYMENT' | 'SECURITY' | 'RECOVERY' | 'POLICY' | 'SYSTEM';
+  target: string;
+  status: 'SUCCESS' | 'FAILURE' | 'WARNING';
+  details: string;
+  hash: string;
+}
+
+export interface SafetyPolicy {
+  id: string;
+  name: string;
+  category: 'HEALTH_GATE' | 'ROLLOUT' | 'SECURITY' | 'HARDWARE';
+  enabled: boolean;
+  threshold: number | string | boolean;
+  unit?: string;
+  description: string;
+}
+
+export interface RecoveryPlan {
+  id: string;
+  deviceId: string;
+  tier: 'TIER_1_AUTO_SWAP' | 'TIER_2_GOLDEN_RESTORE' | 'TIER_3_OPERATOR_OVERRIDE';
+  reason: string;
+  recommendedAction: string;
+  status: 'PENDING' | 'EXECUTING' | 'RESTORED' | 'FAILED';
+  initiatedAt: string;
+  authorizedBy?: string;
+  progress?: number;
+}
+
+export interface AttackScenario {
+  id: string;
+  name: string;
+  description: string;
+  targetBank: 'A' | 'B';
+  vector: 'SIGNATURE_FORGERY' | 'DOWNGRADE_ATTACK' | 'RUNTIME_FAULT' | 'MITM_CORRUPTION' | 'DOS_FLOOD';
+  severity: EventSeverity;
+  expectedOutcome: string;
+  mitigationTime: string;
+  payloadPreview: string;
 }
