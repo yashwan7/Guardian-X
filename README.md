@@ -1,185 +1,221 @@
-# SECURE OTA GUARDIAN
+# 🔐 Secure OTA Guardian
 
-> **"One bad firmware release should never become a fleet-wide disaster."**
+### Safe Firmware Updates Without Risking the Working System
 
-A production-grade **Secure Firmware Lifecycle & Fleet Resilience Platform** with physical NXP FRDM-MCXN236 hardware demonstrator.
+**Secure OTA Guardian** is an embedded firmware-update system designed for devices where a failed firmware update can cause downtime or make the device unusable.
 
----
+The system uses a **dual-bank firmware architecture** on an **NXP 236** platform.
 
-## What is this?
-
-Secure OTA Guardian is a cybersecurity command center for managing firmware updates across a fleet of embedded devices. It implements:
-
-- **Dual-bank firmware architecture** — safe, non-destructive updates
-- **Health-gated firmware activation** — failed deployments auto-rollback
-- **Automatic Safe Mode** — prevents fleet-wide damage from bad releases
-- **Real-time device telemetry** — bidirectional NXP device communication
-- **Device Twin** — virtual mirror of the physical NXP board
-- **Attack Lab** — demonstrates attack scenarios and defenses
-- **Guardian AI** — AI-powered incident analysis
+Instead of overwriting the currently working firmware, the new firmware is installed into a separate bank, tested, and activated only if it passes validation.
 
 ---
 
-## Architecture
+## 🎯 Problem
 
-```
-Browser (Next.js 14)
-    ↕ HTTPS REST + WebSocket (STOMP over SockJS)
-Spring Boot 3.2 Backend
-    ↕ DeviceAdapter Interface
-SimulatedDeviceAdapter (dev) ←→ NXPDeviceAdapter (hardware)
-    ↕ MQTT (Mosquitto broker)
-NXP FRDM-MCXN236 Hardware
-```
+Firmware updates are necessary for modern embedded devices, but updating firmware directly can be risky.
 
-See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details.
+A failed update can lead to:
 
----
+* ❌ Device malfunction
+* ❌ Unexpected downtime
+* ❌ Difficult recovery
+* ❌ Maintenance cost
 
-## Quick Start
+This is especially important for devices such as:
 
-### Prerequisites
+**EV Chargers • Medical Equipment • Industrial Controllers • Smart Appliances**
 
-- Node.js 20+
-- Java 21+
-- Docker & Docker Compose
-- Maven 3.9+
+### Problem Analysis
 
-### 1. Clone & setup environment
+```mermaid
+flowchart LR
+    A[Firmware Update] --> B{Update Failure?}
+    B -->|YES| C[Device Malfunction]
+    C --> D[Downtime]
+    D --> E[Manual Recovery]
+    E --> F[Maintenance Cost]
 
-```bash
-git clone <repo>
-cd secure-ota-guardian
-
-# Frontend environment
-cp .env.example frontend/.env.local
-# Edit frontend/.env.local with your Supabase credentials
-```
-
-### 2. Start PostgreSQL
-
-```bash
-docker-compose up -d postgres
-```
-
-### 3. Start the backend
-
-```bash
-cd backend
-
-# Set environment variables (or use .env file)
-export DATABASE_URL=jdbc:postgresql://localhost:5432/guardian
-export DATABASE_USERNAME=guardian
-export DATABASE_PASSWORD=guardian_secret
-export SUPABASE_JWT_SECRET=your-supabase-jwt-secret
-
-./mvnw spring-boot:run
-# Backend runs on http://localhost:8080
-```
-
-### 4. Start the frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-# Frontend runs on http://localhost:3000
-```
-
-### 5. (Optional) Start device simulator
-
-```bash
-cd device-simulator
-npm install
-cp .env.example .env
-npm run dev
+    B -->|NO| G[Device Continues Working]
 ```
 
 ---
 
-## Google OAuth Setup (Supabase)
+# 💡 Our Solution
 
-1. In Supabase, open the project that owns the publishable key, then go to **Project Settings → API**. Copy both the **Project URL** and **Publishable key** from that same project. The URL cannot be derived from the key.
-2. In **Authentication → URL Configuration**, set:
-   - **Site URL:** `http://localhost:3000`
-   - **Redirect URLs:** `http://localhost:3000/auth/callback`
-3. In **Authentication → Providers → Google**, copy the displayed Supabase callback URL. It has this form:
-   `https://<matching-project-ref>.supabase.co/auth/v1/callback`
-4. In Google Cloud Console → **Google Auth Platform → Clients**, configure the web client with:
-   - **Authorized JavaScript origins:** `http://localhost:3000`
-   - **Authorized redirect URIs:** `https://<matching-project-ref>.supabase.co/auth/v1/callback`
-5. Copy the Google Client ID and Client Secret into the Supabase Google provider settings.
-6. Add the matching Supabase values to `frontend/.env.local`:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=https://<matching-project-ref>.supabase.co
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
-   ```
-   Never put an `sb_secret_...` key in a `NEXT_PUBLIC_*` variable or browser code.
-7. Add JWT secret to backend:
-   ```
-   SUPABASE_JWT_SECRET=your-jwt-secret
-   ```
-   (Find it in Supabase → Settings → API → JWT Secret)
+## Secure OTA Guardian
+
+The core idea is simple:
+
+> **Never risk the working firmware while installing a new firmware version.**
+
+The system maintains two firmware banks:
+
+* **Bank A** → Current stable firmware
+* **Bank B** → New firmware
+
+The new firmware is tested before becoming active.
 
 ---
 
-## Demo Flow
+# ⚙️ How It Works
 
-### Deploy Update 1 (Stable)
+```mermaid
+flowchart TD
+    A[Current Firmware<br/>V1.0.0<br/>BANK A] --> B[New Firmware<br/>V2.0.0]
+    B --> C[Write to BANK B]
+    C --> D[Test / Validate Firmware]
 
-1. Log in at http://localhost:3000
-2. Navigate to Command Center
-3. Click **"Deploy Update 1"** in Firmware Deployment section
-4. Watch the state machine progress: DOWNLOADING → VERIFYING → INSTALLING → REBOOTING → HEALTH_CHECK → **CONFIRMED**
-5. Device Twin shows GREEN LED, v1.0.0, HEALTHY
+    D -->|PASS| E[Activate BANK B]
+    D -->|FAIL| F[Rollback to BANK A]
 
-### Deploy Update 2 (Fault Injection)
-
-1. Click **"Deploy Update 2"** in Firmware Deployment section
-2. Watch: DOWNLOADING → VERIFYING (signature VALID) → INSTALLING → HEALTH_CHECK → **FAILED**
-3. Automatic ROLLBACK executes
-4. Device enters **SAFE MODE**
-5. Security events appear in Security Center
-6. Fleet health shows device in SAFE MODE
-
-### Reset Demo
-
-Click **RESET DEMO** to return system to initial state.
-
----
-
-## Environment Variables
-
-| Variable | Location | Description |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | `frontend/.env.local` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `frontend/.env.local` | Supabase anon key |
-| `NEXT_PUBLIC_BACKEND_URL` | `frontend/.env.local` | Backend API URL |
-| `NEXT_PUBLIC_WS_URL` | `frontend/.env.local` | WebSocket URL |
-| `DATABASE_URL` | Backend env | PostgreSQL JDBC URL |
-| `DATABASE_USERNAME` | Backend env | DB username |
-| `DATABASE_PASSWORD` | Backend env | DB password |
-| `SUPABASE_JWT_SECRET` | Backend env | Supabase JWT secret |
-| `CORS_ALLOWED_ORIGINS` | Backend env | Frontend origin URL |
-
----
-
-## Project Structure
-
-```
-secure-ota-guardian/
-├── frontend/           Next.js 14 + TypeScript + Tailwind CSS
-├── backend/            Spring Boot 3.2 + Java 21 + PostgreSQL
-├── device-simulator/   Node.js TypeScript — DeviceAdapter abstraction
-├── shared/             Shared TypeScript type definitions
-├── docs/               Full documentation
-└── docker-compose.yml  PostgreSQL + pgAdmin
+    E --> G[System Runs V2.0.0]
+    F --> H[System Runs V1.0.0]
 ```
 
+### Simple Flow
+
+**New Firmware → Bank B → Test → Pass / Fail**
+
+✅ Pass → **Activate Bank B**
+
+❌ Fail → **Rollback to Bank A**
+
 ---
 
+# 🔄 Dual-Bank Architecture
 
-## License
+```mermaid
+flowchart LR
+    A["BANK A<br/>V1.0.0<br/>STABLE"] <--> B["BANK B<br/>V2.0.0<br/>NEW"]
 
-MIT License — for hackathon/educational use.
->>>>>>> 8a5879b (feat: Secure OTA Guardian X - Full Stack Cyber Platform & NXP FRDM-MCXN236 2-Way Hardware Sync)
+    B --> C{Validation}
+    C -->|PASS| D["Use V2.0.0"]
+    C -->|FAIL| A
+
+    A --> E["Switch / Recover"]
+    B --> E
+```
+
+The dual-bank design also allows switching between available firmware versions when required.
+
+---
+
+# 🧩 MVP Hardware
+
+| Component               | Purpose                        |
+| ----------------------- | ------------------------------ |
+| **NXP 236**             | Main embedded controller       |
+| **Dual Firmware Banks** | Store current and new firmware |
+| **LCD Display**         | Display system/update status   |
+| **Relay Module**        | Control connected load         |
+| **Current Sensor**      | Monitor current                |
+| **Other peripherals**   | Support system operation       |
+
+---
+
+# 🖥️ Software
+
+The project also includes a web/software interface for interacting with and monitoring the system.
+
+🌐 **Live Website:**
+https://guardian-x-ten.vercel.app
+
+---
+
+# 🚀 Key Features
+
+* 🔄 Dual-bank firmware storage
+* 🛡️ Safe firmware validation
+* ↩️ Automatic rollback on failure
+* 🔀 Firmware version switching
+* 📟 LCD-based status display
+* ⚡ Current/load monitoring
+* 🌐 Web-based interface
+
+> Features shown here should match the currently implemented prototype.
+
+---
+
+# 🏗️ System Architecture
+
+```mermaid
+flowchart LR
+    U[User / Operator] --> W[Web Interface]
+
+    W --> S[Embedded System]
+
+    S --> N[NXP 236]
+
+    N --> A[Bank A<br/>Stable Firmware]
+    N --> B[Bank B<br/>New Firmware]
+
+    N --> L[LCD]
+    N --> R[Relay]
+    N --> C[Current Sensor]
+
+    B --> T[Validation]
+    T -->|Pass| B
+    T -->|Fail| A
+```
+
+---
+
+# 🔁 Firmware Update Logic
+
+```mermaid
+stateDiagram-v2
+    [*] --> BankA
+
+    BankA --> BankB: Install New Firmware
+    BankB --> Testing: Start Validation
+
+    Testing --> BankB: Validation Passed
+    Testing --> BankA: Validation Failed / Rollback
+
+    BankA --> BankB: Manual Version Switch
+    BankB --> BankA: Manual Version Switch
+```
+
+---
+
+# 🌍 Potential Applications
+
+Secure OTA Guardian can be adapted for embedded devices where firmware failure may cause operational problems.
+
+### Possible applications
+
+* ⚡ EV Charging Systems
+* 🏥 Medical / Surgical Equipment
+* 🏭 Industrial Controllers
+* 🏠 Smart Appliances
+* 🔌 Connected Embedded Devices
+
+---
+
+# 🔮 Future Scope
+
+The current MVP can be extended with:
+
+* Secure remote OTA updates
+* Digital signature verification
+* Anti-downgrade protection
+* Cloud-based device monitoring
+* Fleet management
+* Staged / canary deployment
+* Automated alerts
+* Advanced device health monitoring
+
+---
+
+## 🌐 Project
+
+**Live Website:**
+https://guardian-x-ten.vercel.app
+
+---
+
+### 💬 Core Idea
+
+> **Update the firmware. Test it safely. Roll back when necessary. Keep the device running.**
+
+**Secure OTA Guardian — Update without risking the working firmware.**
