@@ -5,7 +5,6 @@ import MetricCard from '@/components/ui/MetricCard';
 import DeviceTwin from '@/components/dashboard/DeviceTwin';
 import FirmwareDeployment from '@/components/dashboard/FirmwareDeployment';
 import LiveEvents from '@/components/dashboard/LiveEvents';
-import FleetHealth from '@/components/dashboard/FleetHealth';
 
 export default function DashboardPage() {
   const { fleetSummary, devices, events, isLoading } = useDeviceStore();
@@ -20,7 +19,7 @@ export default function DashboardPage() {
             <h1 className="text-xl font-bold text-slate-100 font-mono tracking-tight">
               Command Center
             </h1>
-            <span className="text-[9px] font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded font-semibold tracking-wider shadow-[0_0_8px_rgba(0,245,160,0.12)]">
+            <span className="text-[9px] font-mono bg-[#203B5C]/40 border border-[#84B6E4]/40 text-[#84B6E4] px-2 py-0.5 rounded font-semibold tracking-wider shadow-[0_0_8px_rgba(132,182,228,0.2)]">
               NXP FRDM-MCXN236
             </span>
           </div>
@@ -29,9 +28,9 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#060b08] border border-[#14221b] rounded-lg">
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
-          <span className="font-mono text-[11px] text-emerald-400 font-semibold tracking-wider">
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#0c182a] border border-[#1a3250] rounded-lg">
+          <div className="w-2 h-2 rounded-full bg-[#84B6E4] animate-pulse shadow-[0_0_8px_#84B6E4]" />
+          <span className="font-mono text-[11px] text-[#84B6E4] font-semibold tracking-wider">
             FLEET ONLINE &bull; 100% HEALTH
           </span>
         </div>
@@ -91,9 +90,8 @@ export default function DashboardPage() {
           <FirmwareDeployment />
         </div>
 
-        {/* Right Column: Fleet Health & Real-Time Event Stream (5 cols) */}
+        {/* Right Column: Real-Time Event Stream (5 cols) */}
         <div className="lg:col-span-5 flex flex-col gap-4">
-          <FleetHealth summary={fleetSummary} isLoading={isLoading} />
           <LiveEvents events={events} />
         </div>
       </div>

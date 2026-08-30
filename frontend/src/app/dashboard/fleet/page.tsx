@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useDeviceStore } from '@/stores/deviceStore';
 import MetricCard from '@/components/ui/MetricCard';
+import FleetHealth from '@/components/dashboard/FleetHealth';
 import {
   Server,
   Activity,
@@ -157,7 +158,10 @@ export default function FleetPage() {
       </div>
 
       {/* Distribution & Bank Ratio Panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {/* Fleet Health & Integrity Summary */}
+        <FleetHealth summary={fleetSummary} isLoading={false} />
+
         {/* Dual Bank Allocation */}
         <div className="p-4 rounded-xl bg-[#060b08] border border-[#14221b] flex flex-col justify-between">
           <div>
