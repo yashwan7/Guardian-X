@@ -126,6 +126,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
+      if (typeof window !== 'undefined') {
+        // A previous guest session must never prevent a real OAuth attempt.
+        localStorage.removeItem('guardian_auth_skipped');
+        localStorage.removeItem('anukool_auth_skipped');
+        setIsGuest(false);
+      }
+
       const origin = typeof window !== 'undefined' ? window.location.origin : '';
       // Keep this URL identical to Supabase URL Configuration's Redirect URL.
       // The callback route defaults to /dashboard after a successful exchange.
@@ -135,6 +142,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         provider: 'google',
         options: {
           redirectTo: callbackUrl,
+          // Navigate exactly once after we have handled a possible client error.
+          skipBrowserRedirect: true,
         },
       });
 

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { getSupabaseConfig } from '@/lib/supabase/config';
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
@@ -15,13 +16,9 @@ export async function GET(request: NextRequest) {
   const error = requestUrl.searchParams.get('error');
   const errorDescription = requestUrl.searchParams.get('error_description');
 
-  // Detect canonical origin (handling Vercel/proxy headers)
-  const forwardedHost = request.headers.get('x-forwarded-host');
-  const isLocalEnv = process.env.NODE_ENV === 'development';
+  // Use the origin of the actual request. This preserves the Vercel alias that
+  // started OAuth and avoids redirecting through a stale proxy hostname.
   let origin = requestUrl.origin;
-  if (forwardedHost && !isLocalEnv) {
-    origin = `https://${forwardedHost}`;
-  }
 
   if (error) {
     console.error('OAuth error in callback:', error, errorDescription);
@@ -31,24 +28,17 @@ export async function GET(request: NextRequest) {
   }
 
   if (code) {
-    const supabaseUrl =
-      process.env.NEXT_PUBLIC_SUPABASE_URL ||
-      'https://atnsdjitpviqlvyzhlxj.supabase.co';
-    const supabaseKey =
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-      'sb_publishable_ukq7bxCDv-iyPxkl1BlcZA_yvjNWGEB';
-
-    if (!supabaseUrl || !supabaseKey) {
-      console.error(
-        'Supabase OAuth callback is missing NEXT_PUBLIC_SUPABASE_URL or a publishable key'
-      );
-      return NextResponse.redirect(`${origin}/?error=auth_callback_failed`);
+    let config;
+    try {
+      config = getSupabaseConfig();
+    } catch (configError) {
+      console.error('Supabase OAuth callback configuration error:', configError);
+      return NextResponse.redirect(`${origin}/?error=auth_config_missing`);
     }
 
     const response = NextResponse.redirect(`${origin}${next}`);
 
-    const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    const supabase = createServerClient(config.url, config.key, {
       cookies: {
         getAll() {
           return request.cookies.getAll();

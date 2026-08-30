@@ -35,6 +35,8 @@ function LoginContent() {
     if (urlError) {
       if (urlError === 'auth_callback_failed') {
         setErrorMessage('Supabase Invalid API Key / Project URL mismatch. Please update NEXT_PUBLIC_SUPABASE_URL in frontend/.env.local or use Guest Operator mode.');
+      } else if (urlError === 'auth_config_missing') {
+        setErrorMessage('Supabase authentication is not configured in this deployment. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY in Vercel, then redeploy.');
       } else {
         setErrorMessage(decodeURIComponent(urlError));
       }
