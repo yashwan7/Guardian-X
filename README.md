@@ -118,7 +118,7 @@ The dual-bank design also allows switching between available firmware versions w
 The project also includes a web/software interface for interacting with and monitoring the system.
 
 🌐 **Live Website:**
-https://guardian-x-ten.vercel.app
+https://guardian-x.vercel.app
 
 ---
 
@@ -210,7 +210,7 @@ The current MVP can be extended with:
 ## 🌐 Project
 
 **Live Website:**
-https://guardian-x-ten.vercel.app
+https://guardian-x.vercel.app
 
 ---
 
