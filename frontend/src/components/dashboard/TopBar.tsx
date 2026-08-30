@@ -1,12 +1,10 @@
 'use client';
 
-import { useDeviceStore } from '@/stores/deviceStore';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
-import { LogOut, Wifi, WifiOff, Terminal, Usb, Sun, Moon } from 'lucide-react';
-import { buzzerAudio } from '../ui/BuzzerAudio';
+import { LogOut, Usb, Sun, Moon } from 'lucide-react';
 import { webSerial } from '@/lib/webSerial';
 
 interface TopBarProps {
@@ -14,7 +12,6 @@ interface TopBarProps {
 }
 
 export default function TopBar({ user: propUser }: TopBarProps) {
-  const { wsConnected, backendConnected, addEvent } = useDeviceStore();
   const { user: authUser, profile, isGuest, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
@@ -38,21 +35,10 @@ export default function TopBar({ user: propUser }: TopBarProps) {
 
   return (
     <header className="h-13 bg-[#040705]/95 backdrop-blur-md border-b border-[#121e17] flex items-center justify-between px-5 shrink-0 z-30 transition-colors">
-      {/* Left: Breadcrumbs & System Tag */}
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1.5 font-mono text-xs text-slate-400">
-          <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-          <span className="text-slate-500">SYSTEM /</span>
-          <span className="text-slate-200 font-bold tracking-wide">COMMAND CENTER</span>
-        </div>
+      {/* Left spacer */}
+      <div />
 
-        <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 font-mono text-[10px] text-emerald-300">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_#34d399]" />
-          <span>DUAL-BANK GUARDIAN ACTIVE</span>
-        </div>
-      </div>
-
-      {/* Right: Telemetry Indicators & Actions */}
+      {/* Right: Actions, Theme & User */}
       <div className="flex items-center gap-3">
         {/* Quick WebSerial Trigger */}
         <button
@@ -63,22 +49,6 @@ export default function TopBar({ user: propUser }: TopBarProps) {
           <Usb className="w-3.5 h-3.5 text-emerald-400" />
           <span>CONNECT SERIAL</span>
         </button>
-
-        {/* API Link Pill */}
-        <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-[#070d0a] border border-[#14241c] font-mono text-[10px]">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              backendConnected ? 'bg-emerald-400 animate-pulse' : 'bg-emerald-400'
-            }`}
-          />
-          <span className="text-emerald-400 font-semibold">API ONLINE</span>
-        </div>
-
-        {/* WebSocket / Stream Link Pill */}
-        <div className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-[#070d0a] border border-[#14241c] font-mono text-[10px]">
-          <Wifi className="w-3 h-3 text-emerald-400" />
-          <span className="text-emerald-300 font-semibold">STREAM READY</span>
-        </div>
 
         {/* Dark / Light Mode Toggle Button */}
         <button
