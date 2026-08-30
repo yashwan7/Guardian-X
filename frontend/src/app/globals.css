@@ -4,24 +4,24 @@
 
 * { box-sizing: border-box; }
 
-/* Scrollbar Defaults (Twilight Dark) */
+/* Scrollbar Defaults (Frosted Vision Style) */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #070e18; }
-::-webkit-scrollbar-thumb { background: #203b5c; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #31598a; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.7); }
 
-::selection { background: rgba(132, 182, 228, 0.28); color: #84b6e4; }
+::selection { background: rgba(255, 143, 163, 0.35); color: #0f172a; }
 
-/* Grid & Twilight Cyber Dots */
+/* Grid & Vision Ambient Dots */
 .bg-grid {
   background-image: 
-    linear-gradient(rgba(132, 182, 228, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(132, 182, 228, 0.03) 1px, transparent 1px);
-  background-size: 36px 36px;
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 .bg-cyber-dots {
-  background-image: radial-gradient(rgba(132, 182, 228, 0.09) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(148, 163, 184, 0.18) 1.2px, transparent 1.2px);
   background-size: 24px 24px;
 }
 
@@ -33,233 +33,252 @@
 .animate-blink { animation: blink 2s ease-in-out infinite; }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+.animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 
 /* ================================================= */
-/* TWILIGHT BLUE THEME OVERRIDES (DEFAULT DARK MODE) */
+/* VISION PRO GLASSMORPHISM UTILITIES                */
 /* ================================================= */
-html.dark body, body {
-  background-color: #070e18 !important;
-  color: #e2e8f0 !important;
+.vision-glass {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 1);
 }
 
-/* Main Backgrounds & Dashboard Shell */
-html.dark .bg-\[\#030605\],
-html.dark .bg-\[\#040705\],
-html.dark .bg-\[\#030504\],
-html.dark .bg-\[\#06080d\],
-html.dark .bg-\[\#060c09\],
-html.dark .bg-\[\#040806\] {
-  background-color: #070e18 !important;
+.vision-card-gradient {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 250, 252, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 1);
 }
 
-/* Sidebar & Header */
-html.dark aside {
-  background-color: #08111e !important;
-  border-right-color: #1a3250 !important;
-}
-html.dark header {
-  background-color: rgba(8, 17, 30, 0.95) !important;
-  border-bottom-color: #1a3250 !important;
-}
-html.dark main {
-  background: linear-gradient(180deg, #091322 0%, #070e18 100%) !important;
-}
-
-/* Panels, Cards & Modals */
-html.dark .bg-\[\#060b08\],
-html.dark .bg-\[\#050907\],
-html.dark .bg-\[\#050a07\],
-html.dark .bg-\[\#070d0a\],
-html.dark .bg-\[\#08100c\],
-html.dark .bg-\[\#08120d\],
-html.dark .bg-\[\#09130e\],
-html.dark .bg-\[\#0a140f\],
-html.dark .bg-\[\#0c1a13\] {
-  background-color: #0c182a !important;
-  border-color: #1a3250 !important;
-}
-
-/* Sub-panels, Terminal & Code Blocks */
-html.dark .bg-\[\#020403\],
-html.dark .bg-\[\#020503\],
-html.dark .bg-\[\#030604\],
-html.dark .bg-\[\#09140f\] {
-  background-color: #050a12 !important;
-  border-color: #14263d !important;
-}
-
-/* Twilight Borders */
-html.dark .border-\[\#121e17\],
-html.dark .border-\[\#14221b\],
-html.dark .border-\[\#182b21\],
-html.dark .border-\[\#13261b\],
-html.dark .border-\[\#112017\],
-html.dark .border-\[\#101b15\],
-html.dark .border-\[\#122419\],
-html.dark .border-\[\#152a1e\],
-html.dark .border-\[\#162a1f\],
-html.dark .border-\[\#0d1c14\],
-html.dark .border-\[\#0f1d15\],
-html.dark .border-\[\#0f1d16\] {
-  border-color: #1a3250 !important;
-}
-
-/* Twilight Emerald -> Twilight Frost Blue (#84B6E4) replacements */
-html.dark .text-emerald-400,
-html.dark .text-emerald-300 {
-  color: #84b6e4 !important;
-}
-html.dark .text-emerald-500 {
-  color: #6da2d4 !important;
-}
-html.dark .text-emerald-600 {
-  color: #5587b8 !important;
-}
-
-html.dark .bg-emerald-500\/10,
-html.dark .bg-emerald-500\/15,
-html.dark .bg-emerald-500\/20 {
-  background-color: rgba(132, 182, 228, 0.12) !important;
-  border-color: rgba(132, 182, 228, 0.3) !important;
-}
-
-html.dark .border-emerald-500\/20,
-html.dark .border-emerald-500\/30,
-html.dark .border-emerald-500\/40,
-html.dark .border-emerald-500\/50 {
-  border-color: rgba(132, 182, 228, 0.35) !important;
-}
-
-html.dark .bg-emerald-500,
-html.dark .bg-emerald-400 {
-  background: linear-gradient(135deg, #203B5C 0%, #84B6E4 100%) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(132, 182, 228, 0.4) !important;
-  box-shadow: 0 0 16px rgba(132, 182, 228, 0.25) !important;
-}
-
-html.dark .hover\:bg-emerald-400:hover,
-html.dark .hover\:bg-emerald-500:hover {
-  background: linear-gradient(135deg, #2a4c75 0%, #99c7f2 100%) !important;
-  box-shadow: 0 0 20px rgba(132, 182, 228, 0.35) !important;
-}
-
-html.dark .shadow-\[0_0_8px_\#34d399\],
-html.dark .shadow-\[0_0_6px_rgba\(16\,185\,129\,0\.2\)\],
-html.dark .shadow-\[0_0_8px_rgba\(0\,245\,160\,0\.12\)\],
-html.dark .shadow-\[0_0_12px_rgba\(0\,245\,160\,0\.12\)\] {
-  box-shadow: 0 0 12px rgba(132, 182, 228, 0.3) !important;
-}
-
-/* Hover highlights in table & lists */
-html.dark tr:hover {
-  background-color: #0e1c31 !important;
+.vision-knob-pill {
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.12), inset 0 1px 2px rgba(255, 255, 255, 1);
 }
 
 /* ================================================= */
-/* LIGHT MODE STYLES & OVERRIDES (CLEAN TITANIUM)   */
+/* DEFAULT VISION PRO THEME (CLEAN LIQUID GLASS)     */
 /* ================================================= */
-html.light body {
-  background-color: #f1f5f9 !important;
+body, html.light body, html.light {
+  background-color: #f1f4f9 !important;
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(255, 168, 186, 0.18) 0px, transparent 50%),
+    radial-gradient(at 90% 15%, rgba(96, 165, 250, 0.18) 0px, transparent 50%),
+    radial-gradient(at 50% 85%, rgba(196, 181, 253, 0.15) 0px, transparent 60%),
+    radial-gradient(at 80% 80%, rgba(110, 231, 183, 0.12) 0px, transparent 50%) !important;
+  background-attachment: fixed !important;
   color: #0f172a !important;
-}
-
-html.light ::-webkit-scrollbar-track { background: #e2e8f0; }
-html.light ::-webkit-scrollbar-thumb { background: #94a3b8; }
-html.light ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-html.light .bg-cyber-dots {
-  background-image: radial-gradient(rgba(32, 59, 92, 0.12) 1px, transparent 1px);
 }
 
 /* Main Backgrounds */
 html.light .bg-\[\#030605\],
 html.light .bg-\[\#040705\],
 html.light .bg-\[\#030504\],
-html.light .bg-\[\#06080d\] {
-  background-color: #f1f5f9 !important;
+html.light .bg-\[\#06080d\],
+html.light .bg-\[\#070e18\],
+html.light .bg-\[\#08111e\] {
+  background: rgba(248, 250, 252, 0.75) !important;
 }
 
-/* Sidebar & Header */
-html.light aside {
-  background-color: #ffffff !important;
-  border-right-color: #cbd5e1 !important;
+/* Sidebar & Header (Frosted Liquid Glass) */
+aside, html.light aside {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02) !important;
 }
-html.light header {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  border-bottom-color: #cbd5e1 !important;
+header, html.light header {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
 }
-html.light main {
-  background: #f8fafc !important;
+main, html.light main {
+  background: transparent !important;
 }
 
-/* Panels & Cards */
+/* Panels & Cards (Apple Vision Frosted Cards) */
+.bg-\[\#060b08\],
+.bg-\[\#050907\],
+.bg-\[\#050a07\],
+.bg-\[\#070d0a\],
+.bg-\[\#08100c\],
+.bg-\[\#08120d\],
+.bg-\[\#09130e\],
+.bg-\[\#0a140f\],
+.bg-\[\#0c1a13\],
+.bg-\[\#0c182a\],
+.bg-\[\#102038\],
 html.light .bg-\[\#060b08\],
-html.light .bg-\[\#050907\],
-html.light .bg-\[\#050a07\],
-html.light .bg-\[\#070d0a\],
-html.light .bg-\[\#08100c\],
-html.light .bg-\[\#08120d\],
-html.light .bg-\[\#09130e\],
-html.light .bg-\[\#0a140f\],
-html.light .bg-\[\#0c1a13\] {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+html.light .bg-\[\#0c182a\] {
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
+  color: #0f172a !important;
 }
 
 /* Sub-panels & Code / Terminal Displays */
+.bg-\[\#020403\],
+.bg-\[\#020503\],
+.bg-\[\#030604\],
+.bg-\[\#09140f\],
+.bg-\[\#050a12\],
+.bg-\[\#08111e\],
 html.light .bg-\[\#020403\],
-html.light .bg-\[\#020503\],
-html.light .bg-\[\#030604\],
-html.light .bg-\[\#09140f\] {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
+html.light .bg-\[\#050a12\] {
+  background: rgba(241, 245, 249, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border-radius: 0.875rem !important;
+  color: #1e293b !important;
 }
 
 /* Borders */
-html.light .border-\[\#121e17\],
-html.light .border-\[\#14221b\],
-html.light .border-\[\#182b21\],
-html.light .border-\[\#13261b\],
-html.light .border-\[\#112017\],
-html.light .border-\[\#101b15\],
-html.light .border-\[\#122419\],
-html.light .border-\[\#152a1e\],
-html.light .border-\[\#162a1f\],
-html.light .border-\[\#0d1c14\],
-html.light .border-\[\#0f1d15\],
-html.light .border-\[\#0f1d16\] {
-  border-color: #e2e8f0 !important;
+.border-\[\#121e17\],
+.border-\[\#14221b\],
+.border-\[\#182b21\],
+.border-\[\#13261b\],
+.border-\[\#112017\],
+.border-\[\#101b15\],
+.border-\[\#122419\],
+.border-\[\#152a1e\],
+.border-\[\#162a1f\],
+.border-\[\#0d1c14\],
+.border-\[\#0f1d15\],
+.border-\[\#0f1d16\],
+.border-\[\#1a3250\],
+.border-\[\#1e385c\],
+html.light .border-\[\#1a3250\] {
+  border-color: rgba(226, 232, 240, 0.85) !important;
 }
 
-/* Typography Overrides for Light Mode */
-html.light .text-slate-100 { color: #0f172a !important; }
-html.light .text-slate-200 { color: #1e293b !important; }
-html.light .text-slate-300 { color: #334155 !important; }
-html.light .text-slate-400 { color: #64748b !important; }
-html.light .text-slate-500 { color: #64748b !important; }
+/* Typography Overrides */
+.text-slate-100, html.light .text-slate-100 { color: #0f172a !important; font-weight: 700; }
+.text-slate-200, html.light .text-slate-200 { color: #1e293b !important; font-weight: 600; }
+.text-slate-300, html.light .text-slate-300 { color: #334155 !important; }
+.text-slate-400, html.light .text-slate-400 { color: #64748b !important; }
+.text-slate-500, html.light .text-slate-500 { color: #94a3b8 !important; }
 
-html.light .text-emerald-400,
-html.light .text-emerald-300 {
-  color: #203B5C !important;
-  font-weight: 600;
+/* Vision Pro Vibrant Pastels for Badges & Highlights */
+.text-emerald-400,
+.text-emerald-300,
+.text-\[\#84b6e4\],
+.text-\[\#84B6E4\] {
+  color: #2563eb !important;
 }
 
-html.light .bg-emerald-500,
-html.light .bg-emerald-400 {
-  background: linear-gradient(135deg, #203B5C 0%, #31598a 100%) !important;
+.bg-emerald-500\/10,
+.bg-emerald-500\/15,
+.bg-emerald-500\/20,
+.bg-\[\#203B5C\]\/30,
+.bg-\[\#203B5C\]\/40,
+.bg-\[\#203B5C\]\/50 {
+  background: rgba(219, 234, 254, 0.75) !important;
+  border-color: rgba(147, 197, 253, 0.8) !important;
+  color: #1d4ed8 !important;
+}
+
+/* Vision Pro Vibrant Gradient Buttons */
+.bg-emerald-500,
+.bg-emerald-400 {
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%) !important;
   color: #ffffff !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 10px 25px -4px rgba(59, 130, 246, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+}
+
+.hover\:bg-emerald-400:hover,
+.hover\:bg-emerald-500:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%) !important;
+  box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Tables & Dividers */
-html.light .divide-\[\#0f1d16\] > :not([hidden]) ~ :not([hidden]) {
-  border-color: #e2e8f0 !important;
+.divide-\[\#0f1d16\] > :not([hidden]) ~ :not([hidden]),
+.divide-\[\#1a3250\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(226, 232, 240, 0.8) !important;
 }
-html.light tr:hover {
-  background-color: #f1f5f9 !important;
+
+tr:hover {
+  background-color: rgba(241, 245, 249, 0.75) !important;
+}
+
+/* ================================================= */
+/* DARK MODE (MIDNIGHT FROSTED VISIONOS THEME)       */
+/* ================================================= */
+html.dark body {
+  background-color: #0b111e !important;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(255, 143, 163, 0.12) 0px, transparent 50%),
+    radial-gradient(at 85% 20%, rgba(59, 130, 246, 0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(167, 139, 250, 0.1) 0px, transparent 60%) !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark aside {
+  background: rgba(15, 23, 42, 0.82) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+html.dark header {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .bg-\[\#060b08\],
+html.dark .bg-\[\#0c182a\] {
+  background: rgba(30, 41, 59, 0.75) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bg-\[\#020403\],
+html.dark .bg-\[\#050a12\] {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-100 { color: #f8fafc !important; }
+html.dark .text-slate-200 { color: #e2e8f0 !important; }
+html.dark .text-slate-300 { color: #cbd5e1 !important; }
+html.dark .text-slate-400 { color: #94a3b8 !important; }
+
+html.dark .text-emerald-400,
+html.dark .text-emerald-300,
+html.dark .text-\[\#84b6e4\],
+html.dark .text-\[\#84B6E4\] {
+  color: #93c5fd !important;
+}
+
+html.dark .bg-emerald-500\/10,
+html.dark .bg-emerald-500\/15,
+html.dark .bg-emerald-500\/20,
+html.dark .bg-\[\#203B5C\]\/30,
+html.dark .bg-\[\#203B5C\]\/40 {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+  color: #93c5fd !important;
+}
+
+html.dark tr:hover {
+  background-color: rgba(51, 65, 85, 0.45) !important;
 }

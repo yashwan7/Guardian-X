@@ -99,39 +99,39 @@ export default function SettingsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <div
-              onClick={() => setTheme('dark')}
-              className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
-                theme === 'dark'
-                  ? 'bg-[#203B5C]/30 border-[#84B6E4]/50 text-[#84B6E4] shadow-[0_0_14px_rgba(132,182,228,0.2)]'
-                  : 'bg-[#0c182a] border-[#1a3250] text-slate-400 hover:border-[#284c78]'
+              onClick={() => setTheme('light')}
+              className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center gap-3.5 ${
+                theme === 'light'
+                  ? 'bg-gradient-to-tr from-[#ffa8ba]/20 via-[#fed7aa]/20 to-[#60a5fa]/20 border-blue-400/80 shadow-[0_8px_24px_rgba(59,130,246,0.15)]'
+                  : 'bg-white/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 hover:border-blue-400'
               }`}
             >
-              <div className="w-9 h-9 rounded-lg bg-[#070e18] border border-[#84B6E4]/40 flex items-center justify-center text-amber-300">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#ffa8ba] to-[#60a5fa] border border-white/80 shadow-md flex items-center justify-center text-white">
                 <Sun className="w-5 h-5" />
               </div>
               <div>
-                <div className="font-bold text-slate-100">Twilight Blue Mode (Default)</div>
-                <div className="text-[11px] text-slate-400 font-sans">
-                  Deep Twilight Blue (#203B5C) with Frost Cyan highlights (#84B6E4).
+                <div className="font-bold text-slate-900 dark:text-white">Apple Vision Liquid Glass (Default)</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 font-sans">
+                  Frosted glassmorphism, pastel gradients, and tactile 3D knobs.
                 </div>
               </div>
             </div>
 
             <div
-              onClick={() => setTheme('light')}
-              className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
-                theme === 'light'
-                  ? 'bg-[#203B5C]/20 border-[#84B6E4]/50 text-[#203B5C] shadow-[0_0_14px_rgba(132,182,228,0.2)]'
-                  : 'bg-[#0c182a] border-[#1a3250] text-slate-400 hover:border-[#284c78]'
+              onClick={() => setTheme('dark')}
+              className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center gap-3.5 ${
+                theme === 'dark'
+                  ? 'bg-gradient-to-tr from-[#ffa8ba]/20 via-[#fed7aa]/20 to-[#60a5fa]/20 border-blue-400/80 shadow-[0_8px_24px_rgba(59,130,246,0.15)]'
+                  : 'bg-white/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 hover:border-blue-400'
               }`}
             >
-              <div className="w-9 h-9 rounded-lg bg-[#f1f5f9] border border-slate-300 flex items-center justify-center text-[#203B5C]">
+              <div className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 shadow-md flex items-center justify-center text-indigo-400">
                 <Moon className="w-5 h-5" />
               </div>
               <div>
-                <div className="font-bold text-slate-100">Clean Titanium Light</div>
-                <div className="text-[11px] text-slate-400 font-sans">
-                  Clean crisp light background with Twilight Blue accents.
+                <div className="font-bold text-slate-900 dark:text-white">Midnight Frosted VisionOS</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 font-sans">
+                  Deep midnight frosted acrylic with neon pastels.
                 </div>
               </div>
             </div>

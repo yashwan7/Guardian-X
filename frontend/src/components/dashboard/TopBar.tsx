@@ -34,8 +34,8 @@ export default function TopBar({ user: propUser }: TopBarProps) {
   };
 
   return (
-    <header className="h-13 bg-[#08111e]/95 backdrop-blur-md border-b border-[#1a3250] flex items-center justify-between px-5 shrink-0 z-30 transition-colors">
-      {/* Left spacer */}
+    <header className="h-16 bg-white/75 dark:bg-slate-900/75 backdrop-blur-2xl border-b border-white/80 dark:border-white/10 flex items-center justify-between px-6 shrink-0 z-30 transition-colors shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+      {/* Left Spacer */}
       <div />
 
       {/* Right: Actions, Theme & User */}
@@ -43,47 +43,49 @@ export default function TopBar({ user: propUser }: TopBarProps) {
         {/* Quick WebSerial Trigger */}
         <button
           onClick={handleConnectSerial}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-[#0c182a] hover:bg-[#132238] text-[#84B6E4] border border-[#84B6E4]/30 hover:border-[#84B6E4] transition-all shadow-[0_0_12px_rgba(132,182,228,0.15)]"
+          className="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 shadow-[0_4px_12px_rgba(0,0,0,0.04),_inset_0_1px_1px_rgba(255,255,255,1)] hover:bg-slate-50 transition-all hover:scale-102"
           title="Connect NXP Board via USB WebSerial"
         >
-          <Usb className="w-3.5 h-3.5 text-[#84B6E4]" />
-          <span>CONNECT SERIAL</span>
+          <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 text-white flex items-center justify-center shadow-sm">
+            <Usb className="w-3 h-3" />
+          </div>
+          <span>Connect Serial</span>
         </button>
 
-        {/* Dark / Light Mode Toggle Button */}
+        {/* Apple Vision Pro Tactile Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="p-1.5 rounded-lg bg-[#0c182a] hover:bg-[#132238] border border-[#84B6E4]/30 hover:border-[#84B6E4] text-[#84B6E4] transition-all shadow-[0_0_10px_rgba(132,182,228,0.15)]"
+          className="p-2 rounded-full bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 shadow-[0_4px_12px_rgba(0,0,0,0.04),_inset_0_1px_1px_rgba(255,255,255,1)] hover:scale-105 transition-all text-slate-700 dark:text-slate-200"
           title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
         >
           {theme === 'dark' ? (
-            <Sun className="w-4 h-4 text-amber-300 transition-transform duration-300 hover:rotate-45" />
+            <Sun className="w-4 h-4 text-amber-500 transition-transform duration-300 hover:rotate-45" />
           ) : (
-            <Moon className="w-4 h-4 text-[#203B5C] transition-transform duration-300 hover:-rotate-12" />
+            <Moon className="w-4 h-4 text-indigo-600 transition-transform duration-300 hover:-rotate-12" />
           )}
         </button>
 
-        <div className="w-px h-4 bg-[#1a3250]" />
+        <div className="w-px h-6 bg-slate-200/80 dark:bg-slate-800" />
 
         {/* User Pill & Logout */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 shadow-[0_4px_12px_rgba(0,0,0,0.04),_inset_0_1px_1px_rgba(255,255,255,1)]">
           {avatar ? (
             <img
               src={avatar}
               alt={name}
-              className="w-6 h-6 rounded-full border border-[#84B6E4]/40 object-cover"
+              className="w-6 h-6 rounded-full border border-slate-200 object-cover shadow-sm"
             />
           ) : (
-            <div className="w-6 h-6 rounded-full border border-[#84B6E4]/40 bg-[#203B5C]/30 flex items-center justify-center text-[10px] text-[#84B6E4] font-bold">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#ffa8ba] to-[#60a5fa] flex items-center justify-center text-[10px] text-white font-bold shadow-sm">
               {(name[0] || 'G').toUpperCase()}
             </div>
           )}
-          <span className="text-xs text-slate-200 font-medium max-w-[120px] truncate hidden sm:inline">
+          <span className="text-xs text-slate-700 dark:text-slate-200 font-semibold max-w-[120px] truncate hidden sm:inline">
             {name}
           </span>
           <button
             onClick={handleLogout}
-            className="p-1 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded transition-all"
+            className="p-1 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 rounded-full transition-all"
             title="Sign out"
           >
             <LogOut className="w-3.5 h-3.5" />
