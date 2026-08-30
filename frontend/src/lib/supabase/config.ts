@@ -3,6 +3,14 @@ export interface SupabaseConfig {
   key: string;
 }
 
+// These are Supabase's public browser credentials for the current Guardian X
+// deployment. Vercel environment variables still take precedence, but keeping
+// the known-good public fallback lets the login page prerender when a Vercel
+// environment has not been configured yet.
+const DEFAULT_SUPABASE_URL = 'https://atnsdjitpviqlvyzhlxj.supabase.co';
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY =
+  'sb_publishable_ukq7bxCDv-iyPxkl1BlcZA_yvjNWGEB';
+
 function getEnvironmentValue(...names: string[]) {
   for (const name of names) {
     const value = process.env[name]?.trim();
@@ -13,15 +21,17 @@ function getEnvironmentValue(...names: string[]) {
 
 /**
  * Keep every Supabase client (browser, server, and middleware) on the same
- * project. Never silently fall back to a different project in production:
- * that makes OAuth callbacks fail with an apparently valid but wrong session.
+ * project. Environment variables can override the checked-in public defaults,
+ * but all runtime clients still resolve the exact same values.
  */
 export function getSupabaseConfig(): SupabaseConfig {
-  const url = getEnvironmentValue('NEXT_PUBLIC_SUPABASE_URL');
-  const key = getEnvironmentValue(
-    'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
-    'NEXT_PUBLIC_SUPABASE_ANON_KEY'
-  );
+  const url =
+    getEnvironmentValue('NEXT_PUBLIC_SUPABASE_URL') || DEFAULT_SUPABASE_URL;
+  const key =
+    getEnvironmentValue(
+      'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+      'NEXT_PUBLIC_SUPABASE_ANON_KEY'
+    ) || DEFAULT_SUPABASE_PUBLISHABLE_KEY;
 
   let isValidUrl = false;
   try {
