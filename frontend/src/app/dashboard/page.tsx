@@ -3,7 +3,6 @@
 import { useDeviceStore } from '@/stores/deviceStore';
 import MetricCard from '@/components/ui/MetricCard';
 import DeviceTwin from '@/components/dashboard/DeviceTwin';
-import FirmwareDeployment from '@/components/dashboard/FirmwareDeployment';
 import LiveEvents from '@/components/dashboard/LiveEvents';
 
 export default function DashboardPage() {
@@ -84,10 +83,9 @@ export default function DashboardPage() {
 
       {/* 3. Main Dashboard Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-        {/* Left Column: Master Hardware Twin & Firmware Repository (7 cols) */}
+        {/* Left Column: Master Hardware Digital Twin & Controls (7 cols) */}
         <div className="lg:col-span-7 flex flex-col gap-5">
           <DeviceTwin device={primaryDevice} />
-          <FirmwareDeployment />
         </div>
 
         {/* Right Column: Real-Time Event Stream (5 cols) */}
