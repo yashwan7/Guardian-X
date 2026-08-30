@@ -99,82 +99,53 @@ class WebSerialManager {
       while (this.isReading) {
         const { value, done } = await this.reader.read();
         if (done) break;
-        if (value) {
-          lineBuffer += value;
-          const lines = lineBuffer.split(/\r?\n/);
-          lineBuffer = lines.pop() || ''; // Keep remainder
+        if (!value) continue;
 
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (trimmed) {
-              this.handleIncomingLine(trimmed);
-            }
+        lineBuffer += value;
+        const lines = lineBuffer.split('\n');
+        lineBuffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed) {
+            this.handleIncomingLine(trimmed);
+            this.listeners.forEach((fn) => fn(trimmed));
           }
         }
       }
-    } catch (err) {
-      console.warn('WebSerial read loop error:', err);
-    } finally {
-      this._connected = false;
+    } catch (err: any) {
+      if (this.isReading) {
+        console.warn('WebSerial stream read error:', err);
+      }
     }
   }
 
   private handleIncomingLine(line: string) {
-    // Notify custom listeners
-    this.listeners.forEach((handler) => handler(line));
-
     const store = useDeviceStore.getState();
 
-    // 1. Try parsing JSON telemetry
-    if (line.startsWith('{') && line.endsWith('}')) {
-      try {
-        const data = JSON.parse(line);
-        if (data.telemetry || data.lcd1 || data.bank) {
-          const activeBank = data.bank === 'B' ? 'B' : 'A';
-          const fwVer = data.fw || (activeBank === 'B' ? '2.0.0' : '1.0.0');
-          const isSafe = !!data.safe;
-          const led = isSafe ? 'RED' : data.led || (activeBank === 'B' ? 'BLUE' : 'GREEN');
-          const lcd1 = data.lcd1 || (activeBank === 'B' ? 'BANK B: v2.0.0' : 'GUARDIAN X OTA');
-          const lcd2 = data.lcd2 || (activeBank === 'B' ? 'MetroPay Mode OK' : 'BANK A: v1.0.0');
-
-          store.updateDevice('NXP-001', {
-            activeBank,
-            firmwareVersion: fwVer,
-            led: led as any,
-            safeMode: isSafe,
-            health: isSafe ? 35 : 100,
-            status: isSafe ? 'SAFE_MODE' : 'ONLINE',
-            oledLines: [lcd1, lcd2],
-            lastSeen: new Date().toISOString(),
-          });
-        }
-        return;
-      } catch (e) {
-        // Fall through to text matching
-      }
-    }
-
-    // 2. Formatted String Matching from NXP Firmware
-
     // RFID Card Tap
-    if (line.includes('[RFID] Card Tapped!')) {
-      const matchUid = line.match(/UID:\s*([0-9A-Fa-f:]+)/);
-      const uid = matchUid ? matchUid[1] : '4A:3F:82:1C';
-      const isBankB = store.devices[0]?.activeBank === 'B';
+    if (line.includes('[RFID CARD TAP]') || line.includes('SmartPass Access Granted') || line.includes('MetroPay Fare Processed')) {
+      const isMetroPay = line.includes('MetroPay');
 
-      buzzerAudio.playSuccessBeep(2600, 120);
+      if (isMetroPay) {
+        buzzerAudio.playMetroPayChime();
+      } else {
+        buzzerAudio.playSuccessBeep(2400, 120);
+      }
 
       store.updateDevice('NXP-001', {
-        oledLines: [isBankB ? 'PAID: Rs.25 (METRO)' : 'ACCESS: GRANTED', `UID ${uid}`],
+        oledLines: isMetroPay
+          ? ['FARE DEDUCTED $2', 'Bal: $48.50 OK']
+          : ['ACCESS: GRANTED', 'UID 4A:3F:82:1C'],
         lastSeen: new Date().toISOString(),
       });
 
       store.addEvent({
         id: `evt-${Date.now()}`,
         deviceId: 'NXP-001',
-        eventType: 'CARD_TAPPED',
+        eventType: isMetroPay ? 'RFID_FARE_DEBITED' : 'RFID_ACCESS_GRANTED',
         severity: 'INFO',
-        message: `RFID Card Tapped on Physical Reader: UID=${uid} (${isBankB ? 'Fare Debited Rs.25' : 'Access Granted'})`,
+        message: `NXP Board Event: ${line}`,
         timestamp: new Date().toISOString(),
       });
 
@@ -295,6 +266,10 @@ class WebSerialManager {
 
   async triggerBeep(): Promise<boolean> {
     return this.sendRaw('CMD:BEEP');
+  }
+
+  async triggerRFID(): Promise<boolean> {
+    return this.sendRaw('CMD:RFID');
   }
 
   async setLCD(line1: string, line2: string): Promise<boolean> {

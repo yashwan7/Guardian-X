@@ -66,6 +66,16 @@ class BuzzerSoundController {
       }, i * 200);
     }
   }
+
+  /**
+   * Play rollback restoration tone
+   */
+  public playRollbackTone() {
+    this.playSuccessBeep(1800, 100);
+    setTimeout(() => {
+      this.playSuccessBeep(2400, 150);
+    }, 120);
+  }
 }
 
 export const buzzerAudio = new BuzzerSoundController();

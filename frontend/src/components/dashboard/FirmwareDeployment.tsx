@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useDeviceStore } from '@/stores/deviceStore';
 import { api } from '@/lib/api/client';
-import { HardDrive, CheckCircle2, AlertTriangle, Zap } from 'lucide-react';
+import { HardDrive, CheckCircle2, AlertTriangle, Zap, Package } from 'lucide-react';
 import { buzzerAudio } from '../ui/BuzzerAudio';
 
 export default function FirmwareDeployment() {
@@ -103,7 +103,7 @@ export default function FirmwareDeployment() {
 
   if (isLoading) {
     return (
-      <div className="bg-[#060b08] border border-[#14221b] rounded-xl p-6 h-64 animate-pulse flex items-center justify-center text-slate-500 font-mono text-xs">
+      <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 rounded-2xl p-8 h-64 animate-pulse flex items-center justify-center text-slate-400 font-sans text-xs">
         Loading firmware releases...
       </div>
     );
@@ -114,97 +114,99 @@ export default function FirmwareDeployment() {
   );
 
   return (
-    <div className="bg-[#060b08] border border-[#14221b] rounded-xl overflow-hidden shadow-sm flex flex-col">
+    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/90 dark:border-white/10 rounded-2xl overflow-hidden shadow-[0_12px_32px_-8px_rgba(0,0,0,0.04),_inset_0_1px_1px_rgba(255,255,255,1)] flex flex-col transition-all">
       {/* Header */}
-      <div className="p-4 border-b border-[#14221b] flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <HardDrive className="w-4 h-4 text-emerald-400" />
-          <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider">
+      <div className="p-4 sm:px-6 border-b border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white shadow-sm">
+            <Package className="w-4 h-4" />
+          </div>
+          <h3 className="text-xs font-sans font-bold text-slate-900 dark:text-white uppercase tracking-wider">
             Firmware Repository &amp; Staging Slots
           </h3>
         </div>
-        <span className="text-[10px] font-mono text-emerald-500/80">
-          Dual-Bank Execution Targets
+        <span className="text-[10px] font-sans font-semibold text-blue-600 dark:text-blue-400 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200/80">
+          Dual-Bank Targets
         </span>
       </div>
 
       {/* Table List */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs font-mono">
-          <thead className="bg-[#040806] border-b border-[#14221b] text-[9px] text-slate-400 uppercase tracking-wider">
+        <table className="w-full text-left text-xs font-sans">
+          <thead className="bg-slate-50/90 dark:bg-slate-800/80 border-b border-slate-200/80 dark:border-slate-700/60 text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
             <tr>
-              <th className="py-2.5 px-4">Version</th>
-              <th className="py-2.5 px-3">Type / Status</th>
-              <th className="py-2.5 px-3">Description</th>
-              <th className="py-2.5 px-3">SHA-256</th>
-              <th className="py-2.5 px-4 text-right">Action</th>
+              <th className="py-3 px-5">Version</th>
+              <th className="py-3 px-4">Type / Status</th>
+              <th className="py-3 px-4">Description</th>
+              <th className="py-3 px-4">SHA-256</th>
+              <th className="py-3 px-5 text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#14221b]">
+          <tbody className="divide-y divide-slate-200/70 dark:divide-slate-800">
             {availableFirmware.map((fw) => {
               const isCurrentDeploying = deployingId === fw.id;
 
               return (
                 <tr
                   key={fw.id}
-                  className="hover:bg-[#0a120e] transition-colors duration-150 group"
+                  className="hover:bg-slate-50/90 dark:hover:bg-slate-800/60 transition-colors duration-150 group"
                 >
                   {/* Version */}
-                  <td className="py-3 px-4">
-                    <span className="font-bold text-slate-200 block">{fw.version}</span>
-                    <span className="text-[9px] text-slate-400 block">{fw.name}</span>
+                  <td className="py-3 px-5">
+                    <span className="font-mono font-bold text-slate-900 dark:text-white block">{fw.version}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block">{fw.name}</span>
                   </td>
 
                   {/* Status / Type */}
-                  <td className="py-3 px-3">
+                  <td className="py-3 px-4">
                     <span
-                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-semibold ${
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                         fw.type === 'STABLE'
-                          ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/25'
+                          ? 'bg-emerald-50 text-emerald-600 border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300'
                           : fw.type === 'BROKEN'
-                          ? 'bg-rose-500/10 text-rose-300 border border-rose-500/25'
-                          : 'bg-teal-500/10 text-teal-300 border border-teal-500/25'
+                          ? 'bg-rose-50 text-rose-600 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-300'
+                          : 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-900/30 dark:text-blue-300'
                       }`}
                     >
                       {fw.type === 'STABLE' ? (
-                        <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
+                        <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                       ) : (
-                        <AlertTriangle className="w-2.5 h-2.5 text-rose-400" />
+                        <AlertTriangle className="w-3 h-3 text-rose-500" />
                       )}
                       <span>{fw.type}</span>
                     </span>
                   </td>
 
                   {/* Description */}
-                  <td className="py-3 px-3 max-w-[220px]">
-                    <p className="text-[11px] text-slate-300 font-sans truncate" title={fw.description}>
+                  <td className="py-3 px-4 max-w-[240px]">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium truncate" title={fw.description}>
                       {fw.description}
                     </p>
                   </td>
 
                   {/* SHA-256 */}
-                  <td className="py-3 px-3">
+                  <td className="py-3 px-4">
                     <span className="text-[10px] text-slate-400 font-mono">
                       {fw.sha256.substring(0, 10)}...
                     </span>
                   </td>
 
                   {/* Action */}
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-3 px-5 text-right">
                     <button
                       onClick={() => handleDeploy(fw.id, fw.version, fw.isBreakingDemo)}
                       disabled={!!deployingId}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-mono font-semibold transition-all ${
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs hover:scale-102 active:scale-98 ${
                         isCurrentDeploying
-                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 cursor-wait'
+                          ? 'bg-blue-100 text-blue-700 border border-blue-300 cursor-wait'
                           : deployingId
-                          ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
+                          ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                           : fw.type === 'BROKEN'
-                          ? 'bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                          : 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-[0_0_8px_rgba(0,245,160,0.12)]'
+                          ? 'bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-200'
+                          : 'bg-gradient-to-tr from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400 text-white shadow-sm'
                       }`}
                     >
-                      <Zap className="w-3 h-3" />
+                      <Zap className="w-3.5 h-3.5" />
                       <span>{isCurrentDeploying ? 'Deploying...' : 'Deploy OTA'}</span>
                     </button>
                   </td>

@@ -19,57 +19,57 @@ export default function LCD1602Preview({
 
   const bgStyle =
     backlight === 'green'
-      ? 'bg-[#02180c] border-[#074020] text-[#00f5a0] shadow-[0_0_20px_rgba(0,245,160,0.18)]'
+      ? 'bg-[#021c0e] border-emerald-500/40 text-[#10b981] shadow-[0_0_24px_rgba(16,185,129,0.25)]'
       : backlight === 'blue'
-      ? 'bg-[#001d24] border-[#06505e] text-[#2dd4bf] shadow-[0_0_20px_rgba(45,212,191,0.18)]'
-      : 'bg-[#261800] border-[#5e3c00] text-[#fbbf24] shadow-[0_0_20px_rgba(251,191,36,0.18)]';
+      ? 'bg-[#031c2e] border-blue-500/40 text-[#38bdf8] shadow-[0_0_24px_rgba(56,189,248,0.25)]'
+      : 'bg-[#2b1902] border-amber-500/40 text-[#fbbf24] shadow-[0_0_24px_rgba(251,191,36,0.25)]';
 
   const pixelGlow =
     backlight === 'green'
-      ? 'drop-shadow-[0_0_4px_#00f5a0]'
+      ? 'drop-shadow-[0_0_6px_#10b981]'
       : backlight === 'blue'
-      ? 'drop-shadow-[0_0_4px_#2dd4bf]'
-      : 'drop-shadow-[0_0_4px_#fbbf24]';
+      ? 'drop-shadow-[0_0_6px_#38bdf8]'
+      : 'drop-shadow-[0_0_6px_#fbbf24]';
 
   return (
     <div className="flex flex-col items-center w-full">
-      {/* Outer LCD Bezel Frame */}
-      <div className="w-full bg-[#060b08] border-2 border-[#14261c] rounded-xl p-3.5 shadow-2xl relative">
-        {/* Mounting Screws on corners */}
-        <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-slate-800 border border-slate-900 shadow-inner flex items-center justify-center">
-          <div className="w-1 h-0.5 bg-slate-950" />
+      {/* Outer LCD Bezel Frame (Apple Vision Frosted Chassis) */}
+      <div className="w-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/80 rounded-2xl p-4 shadow-[0_8px_24px_rgba(0,0,0,0.04),_inset_0_1px_1px_rgba(255,255,255,1)] relative transition-all">
+        {/* Mounting Screws on corners (Frosted Titanium) */}
+        <div className="absolute top-2 left-2 w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner flex items-center justify-center">
+          <div className="w-1.5 h-0.5 bg-slate-400 dark:bg-slate-500" />
         </div>
-        <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-slate-800 border border-slate-900 shadow-inner flex items-center justify-center">
-          <div className="w-1 h-0.5 bg-slate-950" />
+        <div className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner flex items-center justify-center">
+          <div className="w-1.5 h-0.5 bg-slate-400 dark:bg-slate-500" />
         </div>
-        <div className="absolute bottom-1.5 left-1.5 w-2 h-2 rounded-full bg-slate-800 border border-slate-900 shadow-inner flex items-center justify-center">
-          <div className="w-1 h-0.5 bg-slate-950" />
+        <div className="absolute bottom-2 left-2 w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner flex items-center justify-center">
+          <div className="w-1.5 h-0.5 bg-slate-400 dark:bg-slate-500" />
         </div>
-        <div className="absolute bottom-1.5 right-1.5 w-2 h-2 rounded-full bg-slate-800 border border-slate-900 shadow-inner flex items-center justify-center">
-          <div className="w-1 h-0.5 bg-slate-950" />
+        <div className="absolute bottom-2 right-2 w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner flex items-center justify-center">
+          <div className="w-1.5 h-0.5 bg-slate-400 dark:bg-slate-500" />
         </div>
 
         {/* LCD Header Label */}
-        <div className="flex items-center justify-between mb-2 px-1">
-          <span className="text-[9px] font-mono tracking-widest text-slate-400 font-bold uppercase">
+        <div className="flex items-center justify-between mb-2.5 px-1">
+          <span className="text-[10px] font-mono tracking-wider text-slate-600 dark:text-slate-300 font-bold uppercase">
             16x2 HD44780 LCD (I2C: 0x27)
           </span>
-          <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 border border-blue-200/80 dark:border-blue-700/50 font-semibold shadow-xs">
             SDA: P4_0 &bull; SCL: P4_1
           </span>
         </div>
 
         {/* Backlit Display Screen */}
         <div
-          className={`relative rounded-lg border-2 p-3 font-mono text-sm tracking-[0.18em] flex flex-col justify-center gap-1.5 select-none overflow-hidden transition-all duration-300 ${bgStyle}`}
+          className={`relative rounded-xl border p-4 font-mono text-base tracking-[0.2em] flex flex-col justify-center gap-2 select-none overflow-hidden transition-all duration-300 shadow-inner ${bgStyle}`}
           style={{ fontFamily: "'Courier New', Courier, monospace" }}
         >
           {/* Subtle LCD Dot Matrix Grid Overlay */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-25"
+            className="absolute inset-0 pointer-events-none opacity-20"
             style={{
               backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
+                'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
               backgroundSize: '3px 3px',
             }}
           />
