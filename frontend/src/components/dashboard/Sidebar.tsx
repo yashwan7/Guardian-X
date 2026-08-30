@@ -3,54 +3,63 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Server,
+  Layers,
   Cpu,
-  HardDrive,
-  GitBranch,
+  Package,
+  GitMerge,
   FlaskConical,
   ShieldAlert,
-  HeartPulse,
+  LifeBuoy,
   Bot,
-  ScrollText,
-  Shield,
+  FileText,
+  Sliders,
   Settings,
   ShieldCheck,
 } from 'lucide-react';
 
 interface NavItem {
-  href: string;
   label: string;
+  href: string;
   icon: React.ComponentType<{ className?: string }>;
   exact?: boolean;
 }
 
-const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
+interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
+const NAV_GROUPS: NavGroup[] = [
   {
-    title: 'FLEET & HARDWARE',
+    title: 'Fleet & Core',
     items: [
-      { href: '/dashboard', label: 'Command Center', icon: LayoutDashboard, exact: true },
-      { href: '/dashboard/fleet', label: 'Fleet Overview', icon: Server },
-      { href: '/dashboard/devices', label: 'Devices', icon: Cpu },
-      { href: '/dashboard/firmware', label: 'Firmware Releases', icon: HardDrive },
-      { href: '/dashboard/rollouts', label: 'OTA Rollouts', icon: GitBranch },
+      { label: 'Control Center', href: '/dashboard', icon: Layers, exact: true },
+      { label: 'Fleet Nodes', href: '/dashboard/fleet', icon: Cpu },
+      { label: 'Device Inventory', href: '/dashboard/devices', icon: Cpu },
     ],
   },
   {
-    title: 'SECURITY & RESILIENCE',
+    title: 'Firmware & Rollouts',
     items: [
-      { href: '/dashboard/attack-lab', label: 'Attack Lab', icon: FlaskConical },
-      { href: '/dashboard/security', label: 'Security Center', icon: ShieldAlert },
-      { href: '/dashboard/recovery', label: 'Recovery Center', icon: HeartPulse },
-      { href: '/dashboard/ai', label: 'Guardian AI', icon: Bot },
+      { label: 'Firmware Library', href: '/dashboard/firmware', icon: Package },
+      { label: 'OTA Campaigns', href: '/dashboard/rollouts', icon: GitMerge },
     ],
   },
   {
-    title: 'GOVERNANCE',
+    title: 'Security & Recovery',
     items: [
-      { href: '/dashboard/audit', label: 'Audit Logs', icon: ScrollText },
-      { href: '/dashboard/policies', label: 'Policies', icon: Shield },
-      { href: '/dashboard/settings', label: 'Settings', icon: Settings },
+      { label: 'Resilience Lab', href: '/dashboard/attack-lab', icon: FlaskConical },
+      { label: 'SOC Intelligence', href: '/dashboard/security', icon: ShieldAlert },
+      { label: 'Recovery Engine', href: '/dashboard/recovery', icon: LifeBuoy },
+    ],
+  },
+  {
+    title: 'Intelligence & Ops',
+    items: [
+      { label: 'Guardian AI Copilot', href: '/dashboard/ai', icon: Bot },
+      { label: 'Audit Trail', href: '/dashboard/audit', icon: FileText },
+      { label: 'Safety Policies', href: '/dashboard/policies', icon: Sliders },
+      { label: 'Configuration', href: '/dashboard/settings', icon: Settings },
     ],
   },
 ];
@@ -59,11 +68,11 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 shrink-0 bg-[#040705] border-r border-[#121e17] flex flex-col justify-between select-none z-20">
+    <aside className="w-56 shrink-0 bg-[#08111e] border-r border-[#1a3250] flex flex-col justify-between select-none z-20 transition-colors">
       {/* Brand Header */}
       <div>
-        <div className="h-14 px-4 border-b border-[#121e17] flex items-center gap-2.5 bg-[#050907]">
-          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
+        <div className="h-14 px-4 border-b border-[#1a3250] flex items-center gap-2.5 bg-[#0a1524]">
+          <div className="w-7 h-7 rounded-lg bg-[#203B5C]/30 border border-[#84B6E4]/40 flex items-center justify-center text-[#84B6E4] shadow-[0_0_12px_rgba(132,182,228,0.25)]">
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div>
@@ -71,11 +80,11 @@ export default function Sidebar() {
               <span className="font-mono text-xs font-bold text-slate-100 tracking-wider">
                 GUARDIAN
               </span>
-              <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-semibold shadow-[0_0_6px_rgba(16,185,129,0.2)]">
+              <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-[#203B5C]/50 text-[#84B6E4] border border-[#84B6E4]/40 font-semibold shadow-[0_0_8px_rgba(132,182,228,0.25)]">
                 X
               </span>
             </div>
-            <p className="text-[9px] font-mono text-emerald-600/80 tracking-widest uppercase -mt-0.5 font-medium">
+            <p className="text-[9px] font-mono text-[#84B6E4]/80 tracking-widest uppercase -mt-0.5 font-medium">
               SECURE OTA
             </p>
           </div>
@@ -100,13 +109,13 @@ export default function Sidebar() {
                     href={item.href}
                     className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 group ${
                       isActive
-                        ? 'bg-emerald-500/10 text-emerald-300 font-semibold border border-emerald-500/30 shadow-[0_0_12px_rgba(0,245,160,0.12)]'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-[#09100c]'
+                        ? 'bg-[#203B5C]/40 text-[#84B6E4] font-semibold border border-[#84B6E4]/40 shadow-[0_0_14px_rgba(132,182,228,0.2)]'
+                        : 'text-slate-400 hover:text-slate-100 hover:bg-[#102038]'
                     }`}
                   >
                     <IconComponent
                       className={`w-3.5 h-3.5 transition-colors ${
-                        isActive ? 'text-emerald-400' : 'text-slate-400 group-hover:text-emerald-400'
+                        isActive ? 'text-[#84B6E4]' : 'text-slate-400 group-hover:text-[#84B6E4]'
                       }`}
                     />
                     <span className="truncate">{item.label}</span>
@@ -119,13 +128,13 @@ export default function Sidebar() {
       </div>
 
       {/* Target Hardware Footer Badge */}
-      <div className="p-3 border-t border-[#121e17] bg-[#030504]">
-        <div className="p-2 rounded-lg bg-[#070d0a] border border-[#14241c] flex items-center justify-between">
+      <div className="p-3 border-t border-[#1a3250] bg-[#060c16]">
+        <div className="p-2 rounded-lg bg-[#0c182a] border border-[#1e385c] flex items-center justify-between">
           <div>
             <span className="text-[9px] font-mono text-slate-400 block">TARGET PLATFORM</span>
             <span className="text-[10px] font-mono font-bold text-slate-200">FRDM-MCXN236</span>
           </div>
-          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          <div className="w-2 h-2 rounded-full bg-[#84B6E4] animate-pulse shadow-[0_0_10px_#84B6E4]" />
         </div>
       </div>
     </aside>

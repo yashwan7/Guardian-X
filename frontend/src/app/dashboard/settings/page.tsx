@@ -102,17 +102,17 @@ export default function SettingsPage() {
               onClick={() => setTheme('dark')}
               className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
                 theme === 'dark'
-                  ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(0,245,160,0.12)]'
-                  : 'bg-[#08120d] border-[#122419] text-slate-400 hover:border-[#1c3625]'
+                  ? 'bg-[#203B5C]/30 border-[#84B6E4]/50 text-[#84B6E4] shadow-[0_0_14px_rgba(132,182,228,0.2)]'
+                  : 'bg-[#0c182a] border-[#1a3250] text-slate-400 hover:border-[#284c78]'
               }`}
             >
-              <div className="w-9 h-9 rounded-lg bg-[#030605] border border-emerald-500/30 flex items-center justify-center text-amber-400">
+              <div className="w-9 h-9 rounded-lg bg-[#070e18] border border-[#84B6E4]/40 flex items-center justify-center text-amber-300">
                 <Sun className="w-5 h-5" />
               </div>
               <div>
-                <div className="font-bold text-slate-100">Cyber Dark Mode (Default)</div>
+                <div className="font-bold text-slate-100">Twilight Blue Mode (Default)</div>
                 <div className="text-[11px] text-slate-400 font-sans">
-                  Deep obsidian background with cyber-green telemetry glow.
+                  Deep Twilight Blue (#203B5C) with Frost Cyan highlights (#84B6E4).
                 </div>
               </div>
             </div>
@@ -121,17 +121,17 @@ export default function SettingsPage() {
               onClick={() => setTheme('light')}
               className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
                 theme === 'light'
-                  ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(0,245,160,0.12)]'
-                  : 'bg-[#08120d] border-[#122419] text-slate-400 hover:border-[#1c3625]'
+                  ? 'bg-[#203B5C]/20 border-[#84B6E4]/50 text-[#203B5C] shadow-[0_0_14px_rgba(132,182,228,0.2)]'
+                  : 'bg-[#0c182a] border-[#1a3250] text-slate-400 hover:border-[#284c78]'
               }`}
             >
-              <div className="w-9 h-9 rounded-lg bg-[#f1f5f9] border border-slate-300 flex items-center justify-center text-emerald-600">
+              <div className="w-9 h-9 rounded-lg bg-[#f1f5f9] border border-slate-300 flex items-center justify-center text-[#203B5C]">
                 <Moon className="w-5 h-5" />
               </div>
               <div>
-                <div className="font-bold text-slate-100">Clean Light Mode</div>
+                <div className="font-bold text-slate-100">Clean Titanium Light</div>
                 <div className="text-[11px] text-slate-400 font-sans">
-                  Clean titanium white background with high-contrast text.
+                  Clean crisp light background with Twilight Blue accents.
                 </div>
               </div>
             </div>

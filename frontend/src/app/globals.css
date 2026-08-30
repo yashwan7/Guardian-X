@@ -4,24 +4,24 @@
 
 * { box-sizing: border-box; }
 
-/* Scrollbar Defaults (Dark) */
+/* Scrollbar Defaults (Twilight Dark) */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #040706; }
-::-webkit-scrollbar-thumb { background: #14221b; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #1c3027; }
+::-webkit-scrollbar-track { background: #070e18; }
+::-webkit-scrollbar-thumb { background: #203b5c; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #31598a; }
 
-::selection { background: rgba(0, 245, 160, 0.2); color: #6ee7b7; }
+::selection { background: rgba(132, 182, 228, 0.28); color: #84b6e4; }
 
-/* Grid & Cyber Dots */
+/* Grid & Twilight Cyber Dots */
 .bg-grid {
   background-image: 
-    linear-gradient(rgba(0, 245, 160, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 245, 160, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(132, 182, 228, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 182, 228, 0.03) 1px, transparent 1px);
   background-size: 36px 36px;
 }
 
 .bg-cyber-dots {
-  background-image: radial-gradient(rgba(0, 245, 160, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(132, 182, 228, 0.09) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -39,19 +39,141 @@
 .animate-fade-in { animation: fadeIn 0.3s ease-out; }
 
 /* ================================================= */
-/* LIGHT MODE STYLES & OVERRIDES */
+/* TWILIGHT BLUE THEME OVERRIDES (DEFAULT DARK MODE) */
+/* ================================================= */
+html.dark body, body {
+  background-color: #070e18 !important;
+  color: #e2e8f0 !important;
+}
+
+/* Main Backgrounds & Dashboard Shell */
+html.dark .bg-\[\#030605\],
+html.dark .bg-\[\#040705\],
+html.dark .bg-\[\#030504\],
+html.dark .bg-\[\#06080d\],
+html.dark .bg-\[\#060c09\],
+html.dark .bg-\[\#040806\] {
+  background-color: #070e18 !important;
+}
+
+/* Sidebar & Header */
+html.dark aside {
+  background-color: #08111e !important;
+  border-right-color: #1a3250 !important;
+}
+html.dark header {
+  background-color: rgba(8, 17, 30, 0.95) !important;
+  border-bottom-color: #1a3250 !important;
+}
+html.dark main {
+  background: linear-gradient(180deg, #091322 0%, #070e18 100%) !important;
+}
+
+/* Panels, Cards & Modals */
+html.dark .bg-\[\#060b08\],
+html.dark .bg-\[\#050907\],
+html.dark .bg-\[\#050a07\],
+html.dark .bg-\[\#070d0a\],
+html.dark .bg-\[\#08100c\],
+html.dark .bg-\[\#08120d\],
+html.dark .bg-\[\#09130e\],
+html.dark .bg-\[\#0a140f\],
+html.dark .bg-\[\#0c1a13\] {
+  background-color: #0c182a !important;
+  border-color: #1a3250 !important;
+}
+
+/* Sub-panels, Terminal & Code Blocks */
+html.dark .bg-\[\#020403\],
+html.dark .bg-\[\#020503\],
+html.dark .bg-\[\#030604\],
+html.dark .bg-\[\#09140f\] {
+  background-color: #050a12 !important;
+  border-color: #14263d !important;
+}
+
+/* Twilight Borders */
+html.dark .border-\[\#121e17\],
+html.dark .border-\[\#14221b\],
+html.dark .border-\[\#182b21\],
+html.dark .border-\[\#13261b\],
+html.dark .border-\[\#112017\],
+html.dark .border-\[\#101b15\],
+html.dark .border-\[\#122419\],
+html.dark .border-\[\#152a1e\],
+html.dark .border-\[\#162a1f\],
+html.dark .border-\[\#0d1c14\],
+html.dark .border-\[\#0f1d15\],
+html.dark .border-\[\#0f1d16\] {
+  border-color: #1a3250 !important;
+}
+
+/* Twilight Emerald -> Twilight Frost Blue (#84B6E4) replacements */
+html.dark .text-emerald-400,
+html.dark .text-emerald-300 {
+  color: #84b6e4 !important;
+}
+html.dark .text-emerald-500 {
+  color: #6da2d4 !important;
+}
+html.dark .text-emerald-600 {
+  color: #5587b8 !important;
+}
+
+html.dark .bg-emerald-500\/10,
+html.dark .bg-emerald-500\/15,
+html.dark .bg-emerald-500\/20 {
+  background-color: rgba(132, 182, 228, 0.12) !important;
+  border-color: rgba(132, 182, 228, 0.3) !important;
+}
+
+html.dark .border-emerald-500\/20,
+html.dark .border-emerald-500\/30,
+html.dark .border-emerald-500\/40,
+html.dark .border-emerald-500\/50 {
+  border-color: rgba(132, 182, 228, 0.35) !important;
+}
+
+html.dark .bg-emerald-500,
+html.dark .bg-emerald-400 {
+  background: linear-gradient(135deg, #203B5C 0%, #84B6E4 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(132, 182, 228, 0.4) !important;
+  box-shadow: 0 0 16px rgba(132, 182, 228, 0.25) !important;
+}
+
+html.dark .hover\:bg-emerald-400:hover,
+html.dark .hover\:bg-emerald-500:hover {
+  background: linear-gradient(135deg, #2a4c75 0%, #99c7f2 100%) !important;
+  box-shadow: 0 0 20px rgba(132, 182, 228, 0.35) !important;
+}
+
+html.dark .shadow-\[0_0_8px_\#34d399\],
+html.dark .shadow-\[0_0_6px_rgba\(16\,185\,129\,0\.2\)\],
+html.dark .shadow-\[0_0_8px_rgba\(0\,245\,160\,0\.12\)\],
+html.dark .shadow-\[0_0_12px_rgba\(0\,245\,160\,0\.12\)\] {
+  box-shadow: 0 0 12px rgba(132, 182, 228, 0.3) !important;
+}
+
+/* Hover highlights in table & lists */
+html.dark tr:hover {
+  background-color: #0e1c31 !important;
+}
+
+/* ================================================= */
+/* LIGHT MODE STYLES & OVERRIDES (CLEAN TITANIUM)   */
 /* ================================================= */
 html.light body {
-  background-color: #f8fafc !important;
+  background-color: #f1f5f9 !important;
   color: #0f172a !important;
 }
 
-html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
-html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
-html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+html.light ::-webkit-scrollbar-track { background: #e2e8f0; }
+html.light ::-webkit-scrollbar-thumb { background: #94a3b8; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
 html.light .bg-cyber-dots {
-  background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(32, 59, 92, 0.12) 1px, transparent 1px);
 }
 
 /* Main Backgrounds */
@@ -59,17 +181,17 @@ html.light .bg-\[\#030605\],
 html.light .bg-\[\#040705\],
 html.light .bg-\[\#030504\],
 html.light .bg-\[\#06080d\] {
-  background-color: #f8fafc !important;
+  background-color: #f1f5f9 !important;
 }
 
 /* Sidebar & Header */
 html.light aside {
   background-color: #ffffff !important;
-  border-right-color: #e2e8f0 !important;
+  border-right-color: #cbd5e1 !important;
 }
 html.light header {
   background-color: rgba(255, 255, 255, 0.95) !important;
-  border-bottom-color: #e2e8f0 !important;
+  border-bottom-color: #cbd5e1 !important;
 }
 html.light main {
   background: #f8fafc !important;
@@ -86,6 +208,8 @@ html.light .bg-\[\#09130e\],
 html.light .bg-\[\#0a140f\],
 html.light .bg-\[\#0c1a13\] {
   background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
 }
 
 /* Sub-panels & Code / Terminal Displays */
@@ -94,6 +218,7 @@ html.light .bg-\[\#020503\],
 html.light .bg-\[\#030604\],
 html.light .bg-\[\#09140f\] {
   background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
 }
 
 /* Borders */
@@ -118,6 +243,18 @@ html.light .text-slate-200 { color: #1e293b !important; }
 html.light .text-slate-300 { color: #334155 !important; }
 html.light .text-slate-400 { color: #64748b !important; }
 html.light .text-slate-500 { color: #64748b !important; }
+
+html.light .text-emerald-400,
+html.light .text-emerald-300 {
+  color: #203B5C !important;
+  font-weight: 600;
+}
+
+html.light .bg-emerald-500,
+html.light .bg-emerald-400 {
+  background: linear-gradient(135deg, #203B5C 0%, #31598a 100%) !important;
+  color: #ffffff !important;
+}
 
 /* Tables & Dividers */
 html.light .divide-\[\#0f1d16\] > :not([hidden]) ~ :not([hidden]) {

@@ -15,11 +15,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   return (
     <DashboardProvider>
-      <div className="flex h-screen bg-[#030605] overflow-hidden text-slate-100 font-sans selection:bg-emerald-500/20 selection:text-emerald-300">
+      <div className="flex h-screen bg-[#070e18] overflow-hidden text-slate-100 font-sans selection:bg-[#84b6e4]/30 selection:text-[#84b6e4]">
         <Sidebar />
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <TopBar user={user} />
-          <main className="flex-1 overflow-y-auto p-5 sm:p-6 bg-gradient-to-b from-[#060c09] via-[#040806] to-[#030504] bg-cyber-dots">
+          <main className="flex-1 overflow-y-auto p-5 sm:p-6 bg-gradient-to-b from-[#091322] via-[#070e18] to-[#050a12] bg-cyber-dots">
             {children}
           </main>
         </div>

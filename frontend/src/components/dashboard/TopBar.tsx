@@ -34,7 +34,7 @@ export default function TopBar({ user: propUser }: TopBarProps) {
   };
 
   return (
-    <header className="h-13 bg-[#040705]/95 backdrop-blur-md border-b border-[#121e17] flex items-center justify-between px-5 shrink-0 z-30 transition-colors">
+    <header className="h-13 bg-[#08111e]/95 backdrop-blur-md border-b border-[#1a3250] flex items-center justify-between px-5 shrink-0 z-30 transition-colors">
       {/* Left spacer */}
       <div />
 
@@ -43,27 +43,27 @@ export default function TopBar({ user: propUser }: TopBarProps) {
         {/* Quick WebSerial Trigger */}
         <button
           onClick={handleConnectSerial}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-[#08120c] hover:bg-[#0e1f15] text-emerald-300 border border-emerald-500/30 hover:border-emerald-400 transition-all shadow-[0_0_10px_rgba(0,245,160,0.12)]"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-[#0c182a] hover:bg-[#132238] text-[#84B6E4] border border-[#84B6E4]/30 hover:border-[#84B6E4] transition-all shadow-[0_0_12px_rgba(132,182,228,0.15)]"
           title="Connect NXP Board via USB WebSerial"
         >
-          <Usb className="w-3.5 h-3.5 text-emerald-400" />
+          <Usb className="w-3.5 h-3.5 text-[#84B6E4]" />
           <span>CONNECT SERIAL</span>
         </button>
 
         {/* Dark / Light Mode Toggle Button */}
         <button
           onClick={toggleTheme}
-          className="p-1.5 rounded-lg bg-[#08120c] hover:bg-[#0e1f15] border border-emerald-500/30 hover:border-emerald-400 text-emerald-400 transition-all shadow-[0_0_8px_rgba(16,185,129,0.15)]"
+          className="p-1.5 rounded-lg bg-[#0c182a] hover:bg-[#132238] border border-[#84B6E4]/30 hover:border-[#84B6E4] text-[#84B6E4] transition-all shadow-[0_0_10px_rgba(132,182,228,0.15)]"
           title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
         >
           {theme === 'dark' ? (
-            <Sun className="w-4 h-4 text-amber-400 transition-transform duration-300 hover:rotate-45" />
+            <Sun className="w-4 h-4 text-amber-300 transition-transform duration-300 hover:rotate-45" />
           ) : (
-            <Moon className="w-4 h-4 text-emerald-600 transition-transform duration-300 hover:-rotate-12" />
+            <Moon className="w-4 h-4 text-[#203B5C] transition-transform duration-300 hover:-rotate-12" />
           )}
         </button>
 
-        <div className="w-px h-4 bg-[#121e17]" />
+        <div className="w-px h-4 bg-[#1a3250]" />
 
         {/* User Pill & Logout */}
         <div className="flex items-center gap-2">
@@ -71,14 +71,14 @@ export default function TopBar({ user: propUser }: TopBarProps) {
             <img
               src={avatar}
               alt={name}
-              className="w-6 h-6 rounded-full border border-emerald-500/30 object-cover"
+              className="w-6 h-6 rounded-full border border-[#84B6E4]/40 object-cover"
             />
           ) : (
-            <div className="w-6 h-6 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center text-[10px] text-emerald-400 font-bold">
+            <div className="w-6 h-6 rounded-full border border-[#84B6E4]/40 bg-[#203B5C]/30 flex items-center justify-center text-[10px] text-[#84B6E4] font-bold">
               {(name[0] || 'G').toUpperCase()}
             </div>
           )}
-          <span className="text-xs text-slate-300 font-medium max-w-[120px] truncate hidden sm:inline">
+          <span className="text-xs text-slate-200 font-medium max-w-[120px] truncate hidden sm:inline">
             {name}
           </span>
           <button
