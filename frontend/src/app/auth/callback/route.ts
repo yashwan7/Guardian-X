@@ -4,11 +4,14 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
-  const requestedNext = requestUrl.searchParams.get('next') || requestUrl.searchParams.get('redirect');
+  const requestedNext =
+    requestUrl.searchParams.get('next') ||
+    requestUrl.searchParams.get('redirect');
   // Only allow local paths so an OAuth callback cannot become an open redirect.
-  const next = requestedNext?.startsWith('/') && !requestedNext.startsWith('//')
-    ? requestedNext
-    : '/dashboard';
+  const next =
+    requestedNext?.startsWith('/') && !requestedNext.startsWith('//')
+      ? requestedNext
+      : '/dashboard';
   const error = requestUrl.searchParams.get('error');
   const errorDescription = requestUrl.searchParams.get('error_description');
 
@@ -22,17 +25,24 @@ export async function GET(request: NextRequest) {
 
   if (error) {
     console.error('OAuth error in callback:', error, errorDescription);
-    return NextResponse.redirect(`${origin}/?error=${encodeURIComponent(errorDescription || error)}`);
+    return NextResponse.redirect(
+      `${origin}/?error=${encodeURIComponent(errorDescription || error)}`
+    );
   }
 
   if (code) {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseUrl =
+      process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      'https://atnsdjitpviqlvyzhlxj.supabase.co';
     const supabaseKey =
       process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+      'sb_publishable_ukq7bxCDv-iyPxkl1BlcZA_yvjNWGEB';
 
     if (!supabaseUrl || !supabaseKey) {
-      console.error('Supabase OAuth callback is missing NEXT_PUBLIC_SUPABASE_URL or a publishable key');
+      console.error(
+        'Supabase OAuth callback is missing NEXT_PUBLIC_SUPABASE_URL or a publishable key'
+      );
       return NextResponse.redirect(`${origin}/?error=auth_callback_failed`);
     }
 
@@ -46,12 +56,15 @@ export async function GET(request: NextRequest) {
         setAll(cookiesToSet: Array<{ name: string; value: string; options: CookieOptions }>) {
           // exchangeCodeForSession() writes the access/refresh token cookies here.
           // They must be attached to the redirect response returned to the browser.
-          cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
         },
       },
     });
 
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    const { error: exchangeError } =
+      await supabase.auth.exchangeCodeForSession(code);
     if (!exchangeError) {
       return response;
     }
