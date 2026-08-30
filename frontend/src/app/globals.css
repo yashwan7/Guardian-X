@@ -38,6 +38,99 @@
 }
 .animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* ================================================= */
+/* SEAMLESS GLOBAL HOVER & INTERACTION ANIMATIONS     */
+/* ================================================= */
+
+/* 1. Global Button Micro-Interactions */
+button, 
+a[role="button"],
+.btn-hover {
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+button:hover,
+a[role="button"]:hover,
+.btn-hover:hover {
+  transform: translateY(-1.5px) scale(1.02);
+  filter: brightness(1.03);
+}
+
+button:active,
+a[role="button"]:active,
+.btn-hover:active {
+  transform: translateY(0.5px) scale(0.98);
+}
+
+/* 2. Glass Cards & Panels Seamless Hover Lift */
+.bg-\[\#060b08\],
+.bg-\[\#050907\],
+.bg-\[\#050a07\],
+.bg-\[\#070d0a\],
+.bg-\[\#08100c\],
+.bg-\[\#08120d\],
+.bg-\[\#09130e\],
+.bg-\[\#0a140f\],
+.bg-\[\#0c1a13\],
+.bg-\[\#0c182a\],
+.bg-\[\#102038\],
+.vision-glass,
+.vision-card-gradient {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.28s ease !important;
+}
+
+.bg-\[\#060b08\]:hover,
+.bg-\[\#050907\]:hover,
+.bg-\[\#070d0a\]:hover,
+.bg-\[\#08120d\]:hover,
+.bg-\[\#0c182a\]:hover,
+.vision-glass:hover,
+.vision-card-gradient:hover {
+  transform: translateY(-2.5px);
+  box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.09), 0 0 0 1px rgba(96, 165, 250, 0.3) inset !important;
+  border-color: rgba(147, 197, 253, 0.7) !important;
+}
+
+/* 3. Table Rows & List Items Hover */
+tr, .hover-row {
+  transition: background-color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+tr:hover, .hover-row:hover {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+}
+html.dark tr:hover, html.dark .hover-row:hover {
+  background-color: rgba(51, 65, 85, 0.55) !important;
+}
+
+/* 4. Inputs & Form Controls Hover/Focus */
+input, select, textarea {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+input:hover, select:hover, textarea:hover {
+  border-color: rgba(96, 165, 250, 0.6) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18), 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border-color: #3b82f6 !important;
+}
+
 /* ================================================= */
 /* VISION PRO GLASSMORPHISM UTILITIES                */
 /* ================================================= */
@@ -211,10 +304,6 @@ html.light .border-\[\#1a3250\] {
   border-color: rgba(226, 232, 240, 0.8) !important;
 }
 
-tr:hover {
-  background-color: rgba(241, 245, 249, 0.75) !important;
-}
-
 /* ================================================= */
 /* DARK MODE (MIDNIGHT FROSTED VISIONOS THEME)       */
 /* ================================================= */
@@ -277,8 +366,4 @@ html.dark .bg-\[\#203B5C\]\/40 {
   background: rgba(59, 130, 246, 0.18) !important;
   border-color: rgba(96, 165, 250, 0.3) !important;
   color: #93c5fd !important;
-}
-
-html.dark tr:hover {
-  background-color: rgba(51, 65, 85, 0.45) !important;
 }
