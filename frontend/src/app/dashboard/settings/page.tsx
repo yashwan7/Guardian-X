@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useDeviceStore } from '@/stores/deviceStore';
+import { useTheme } from '@/context/ThemeContext';
 import {
   Settings,
   Cpu,
@@ -15,11 +16,15 @@ import {
   Save,
   Server,
   Layers,
+  Sun,
+  Moon,
+  Sparkles,
 } from 'lucide-react';
 
 export default function SettingsPage() {
   const { hardwareAdapterMode, setHardwareAdapterMode, resetDemo, addAuditLog } =
     useDeviceStore();
+  const { theme, setTheme, toggleTheme } = useTheme();
 
   const [mqttHost, setMqttHost] = useState('localhost');
   const [mqttPort, setMqttPort] = useState(1883);
@@ -62,7 +67,7 @@ export default function SettingsPage() {
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            Hardware adapter switches, WebSerial baud rates, Mosquitto MQTT broker credentials, and demo reset controls.
+            Theme visual styling, hardware adapter switches, WebSerial baud rates, Mosquitto MQTT broker credentials, and demo reset controls.
           </p>
         </div>
       </div>
@@ -82,6 +87,57 @@ export default function SettingsPage() {
       )}
 
       <form onSubmit={handleSaveSettings} className="space-y-4 text-xs font-mono">
+        {/* Appearance & Visual Theme Card */}
+        <div className="p-5 rounded-2xl bg-[#060b08] border border-[#14221b] space-y-3">
+          <div className="flex items-center gap-2 text-slate-200 font-bold">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span>Appearance &amp; Theme Mode</span>
+          </div>
+          <p className="text-xs text-slate-400 font-sans">
+            Choose your preferred interface theme for the Guardian X Command Center.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div
+              onClick={() => setTheme('dark')}
+              className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
+                theme === 'dark'
+                  ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(0,245,160,0.12)]'
+                  : 'bg-[#08120d] border-[#122419] text-slate-400 hover:border-[#1c3625]'
+              }`}
+            >
+              <div className="w-9 h-9 rounded-lg bg-[#030605] border border-emerald-500/30 flex items-center justify-center text-amber-400">
+                <Sun className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-bold text-slate-100">Cyber Dark Mode (Default)</div>
+                <div className="text-[11px] text-slate-400 font-sans">
+                  Deep obsidian background with cyber-green telemetry glow.
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={() => setTheme('light')}
+              className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center gap-3 ${
+                theme === 'light'
+                  ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-300 shadow-[0_0_12px_rgba(0,245,160,0.12)]'
+                  : 'bg-[#08120d] border-[#122419] text-slate-400 hover:border-[#1c3625]'
+              }`}
+            >
+              <div className="w-9 h-9 rounded-lg bg-[#f1f5f9] border border-slate-300 flex items-center justify-center text-emerald-600">
+                <Moon className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-bold text-slate-100">Clean Light Mode</div>
+                <div className="text-[11px] text-slate-400 font-sans">
+                  Clean titanium white background with high-contrast text.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Hardware Adapter Mode Card */}
         <div className="p-5 rounded-2xl bg-[#060b08] border border-[#14221b] space-y-3">
           <div className="flex items-center gap-2 text-slate-200 font-bold">

@@ -4,13 +4,15 @@
 
 * { box-sizing: border-box; }
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
+/* Scrollbar Defaults (Dark) */
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: #040706; }
-::-webkit-scrollbar-thumb { background: #14221b; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #14221b; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #1c3027; }
 
 ::selection { background: rgba(0, 245, 160, 0.2); color: #6ee7b7; }
 
+/* Grid & Cyber Dots */
 .bg-grid {
   background-image: 
     linear-gradient(rgba(0, 245, 160, 0.02) 1px, transparent 1px),
@@ -23,6 +25,7 @@
   background-size: 24px 24px;
 }
 
+/* Animations */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
@@ -34,3 +37,92 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+
+/* ================================================= */
+/* LIGHT MODE STYLES & OVERRIDES */
+/* ================================================= */
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light ::-webkit-scrollbar-track { background: #f1f5f9; }
+html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+html.light .bg-cyber-dots {
+  background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 1px);
+}
+
+/* Main Backgrounds */
+html.light .bg-\[\#030605\],
+html.light .bg-\[\#040705\],
+html.light .bg-\[\#030504\],
+html.light .bg-\[\#06080d\] {
+  background-color: #f8fafc !important;
+}
+
+/* Sidebar & Header */
+html.light aside {
+  background-color: #ffffff !important;
+  border-right-color: #e2e8f0 !important;
+}
+html.light header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+html.light main {
+  background: #f8fafc !important;
+}
+
+/* Panels & Cards */
+html.light .bg-\[\#060b08\],
+html.light .bg-\[\#050907\],
+html.light .bg-\[\#050a07\],
+html.light .bg-\[\#070d0a\],
+html.light .bg-\[\#08100c\],
+html.light .bg-\[\#08120d\],
+html.light .bg-\[\#09130e\],
+html.light .bg-\[\#0a140f\],
+html.light .bg-\[\#0c1a13\] {
+  background-color: #ffffff !important;
+}
+
+/* Sub-panels & Code / Terminal Displays */
+html.light .bg-\[\#020403\],
+html.light .bg-\[\#020503\],
+html.light .bg-\[\#030604\],
+html.light .bg-\[\#09140f\] {
+  background-color: #f1f5f9 !important;
+}
+
+/* Borders */
+html.light .border-\[\#121e17\],
+html.light .border-\[\#14221b\],
+html.light .border-\[\#182b21\],
+html.light .border-\[\#13261b\],
+html.light .border-\[\#112017\],
+html.light .border-\[\#101b15\],
+html.light .border-\[\#122419\],
+html.light .border-\[\#152a1e\],
+html.light .border-\[\#162a1f\],
+html.light .border-\[\#0d1c14\],
+html.light .border-\[\#0f1d15\],
+html.light .border-\[\#0f1d16\] {
+  border-color: #e2e8f0 !important;
+}
+
+/* Typography Overrides for Light Mode */
+html.light .text-slate-100 { color: #0f172a !important; }
+html.light .text-slate-200 { color: #1e293b !important; }
+html.light .text-slate-300 { color: #334155 !important; }
+html.light .text-slate-400 { color: #64748b !important; }
+html.light .text-slate-500 { color: #64748b !important; }
+
+/* Tables & Dividers */
+html.light .divide-\[\#0f1d16\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+html.light tr:hover {
+  background-color: #f1f5f9 !important;
+}

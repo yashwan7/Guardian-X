@@ -2,9 +2,10 @@
 
 import { useDeviceStore } from '@/stores/deviceStore';
 import { useAuth } from '@/context/AuthContext';
+import { useTheme } from '@/context/ThemeContext';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
-import { LogOut, Wifi, WifiOff, Terminal, Usb } from 'lucide-react';
+import { LogOut, Wifi, WifiOff, Terminal, Usb, Sun, Moon } from 'lucide-react';
 import { buzzerAudio } from '../ui/BuzzerAudio';
 import { webSerial } from '@/lib/webSerial';
 
@@ -15,6 +16,7 @@ interface TopBarProps {
 export default function TopBar({ user: propUser }: TopBarProps) {
   const { wsConnected, backendConnected, addEvent } = useDeviceStore();
   const { user: authUser, profile, isGuest, signOut } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
 
   const currentUser = authUser || propUser;
@@ -35,7 +37,7 @@ export default function TopBar({ user: propUser }: TopBarProps) {
   };
 
   return (
-    <header className="h-13 bg-[#040705]/95 backdrop-blur-md border-b border-[#121e17] flex items-center justify-between px-5 shrink-0 z-30">
+    <header className="h-13 bg-[#040705]/95 backdrop-blur-md border-b border-[#121e17] flex items-center justify-between px-5 shrink-0 z-30 transition-colors">
       {/* Left: Breadcrumbs & System Tag */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-1.5 font-mono text-xs text-slate-400">
@@ -74,13 +76,22 @@ export default function TopBar({ user: propUser }: TopBarProps) {
 
         {/* WebSocket / Stream Link Pill */}
         <div className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-[#070d0a] border border-[#14241c] font-mono text-[10px]">
-          {wsConnected ? (
-            <Wifi className="w-3 h-3 text-emerald-400" />
-          ) : (
-            <Wifi className="w-3 h-3 text-emerald-400" />
-          )}
+          <Wifi className="w-3 h-3 text-emerald-400" />
           <span className="text-emerald-300 font-semibold">STREAM READY</span>
         </div>
+
+        {/* Dark / Light Mode Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="p-1.5 rounded-lg bg-[#08120c] hover:bg-[#0e1f15] border border-emerald-500/30 hover:border-emerald-400 text-emerald-400 transition-all shadow-[0_0_8px_rgba(16,185,129,0.15)]"
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {theme === 'dark' ? (
+            <Sun className="w-4 h-4 text-amber-400 transition-transform duration-300 hover:rotate-45" />
+          ) : (
+            <Moon className="w-4 h-4 text-emerald-600 transition-transform duration-300 hover:-rotate-12" />
+          )}
+        </button>
 
         <div className="w-px h-4 bg-[#121e17]" />
 
