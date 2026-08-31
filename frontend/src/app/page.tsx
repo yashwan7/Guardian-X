@@ -118,7 +118,7 @@ function LoginContent() {
       {/* ─────────────────────────────────────────────────────────────
           macOS FROSTED TOP BAR (CHANGE 1: POSITIONED FURTHER LEFT & PROPORTIONATE)
          ───────────────────────────────────────────────────────────── */}
-      <header className="relative z-20 px-4 sm:px-8 py-5 flex items-center justify-between max-w-7xl w-full mx-auto">
+      <header className="relative z-20 px-4 sm:px-8 py-5 flex items-center justify-between max-w-7xl w-full mx-auto bg-transparent border-0 shadow-none">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-2xl bg-white/[0.08] hover:bg-white/[0.12] border border-white/20 flex items-center justify-center backdrop-blur-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-all shrink-0">
             <Cpu className="w-5 h-5 text-cyan-400 drop-shadow-[0_0_8px_rgba(0,212,255,0.6)]" />

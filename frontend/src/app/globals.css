@@ -155,9 +155,9 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ================================================= */
-/* DEFAULT VISION PRO THEME (CLEAN LIQUID GLASS)     */
+/* VISION PRO THEMES (CLEAN LIQUID GLASS)            */
 /* ================================================= */
-body, html.light body, html.light {
+html.light body, html.light {
   background-color: #f1f4f9 !important;
   background-image: 
     radial-gradient(at 10% 10%, rgba(255, 168, 186, 0.18) 0px, transparent 50%),
@@ -168,7 +168,7 @@ body, html.light body, html.light {
   color: #0f172a !important;
 }
 
-/* Main Backgrounds */
+/* Main Backgrounds in Light Mode */
 html.light .bg-\[\#030605\],
 html.light .bg-\[\#040705\],
 html.light .bg-\[\#030504\],
@@ -178,39 +178,22 @@ html.light .bg-\[\#08111e\] {
   background: rgba(248, 250, 252, 0.75) !important;
 }
 
-/* Sidebar & Header (Frosted Liquid Glass) */
-aside, html.light aside {
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.9) !important;
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02) !important;
-}
-header, html.light header {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.9) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
-}
-main, html.light main {
+html.light main {
   background: transparent !important;
 }
 
-/* Panels & Cards (Apple Vision Frosted Cards) */
-.bg-\[\#060b08\],
-.bg-\[\#050907\],
-.bg-\[\#050a07\],
-.bg-\[\#070d0a\],
-.bg-\[\#08100c\],
-.bg-\[\#08120d\],
-.bg-\[\#09130e\],
-.bg-\[\#0a140f\],
-.bg-\[\#0c1a13\],
-.bg-\[\#0c182a\],
-.bg-\[\#102038\],
+/* Panels & Cards in Light Mode */
 html.light .bg-\[\#060b08\],
-html.light .bg-\[\#0c182a\] {
+html.light .bg-\[\#050907\],
+html.light .bg-\[\#050a07\],
+html.light .bg-\[\#070d0a\],
+html.light .bg-\[\#08100c\],
+html.light .bg-\[\#08120d\],
+html.light .bg-\[\#09130e\],
+html.light .bg-\[\#0a140f\],
+html.light .bg-\[\#0c1a13\],
+html.light .bg-\[\#0c182a\],
+html.light .bg-\[\#102038\] {
   background: rgba(255, 255, 255, 0.86) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
@@ -220,15 +203,13 @@ html.light .bg-\[\#0c182a\] {
   color: #0f172a !important;
 }
 
-/* Sub-panels & Code / Terminal Displays */
-.bg-\[\#020403\],
-.bg-\[\#020503\],
-.bg-\[\#030604\],
-.bg-\[\#09140f\],
-.bg-\[\#050a12\],
-.bg-\[\#08111e\],
+/* Sub-panels & Code / Terminal Displays in Light Mode */
 html.light .bg-\[\#020403\],
-html.light .bg-\[\#050a12\] {
+html.light .bg-\[\#020503\],
+html.light .bg-\[\#030604\],
+html.light .bg-\[\#09140f\],
+html.light .bg-\[\#050a12\],
+html.light .bg-\[\#08111e\] {
   background: rgba(241, 245, 249, 0.85) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
@@ -237,54 +218,53 @@ html.light .bg-\[\#050a12\] {
   color: #1e293b !important;
 }
 
-/* Borders */
-.border-\[\#121e17\],
-.border-\[\#14221b\],
-.border-\[\#182b21\],
-.border-\[\#13261b\],
-.border-\[\#112017\],
-.border-\[\#101b15\],
-.border-\[\#122419\],
-.border-\[\#152a1e\],
-.border-\[\#162a1f\],
-.border-\[\#0d1c14\],
-.border-\[\#0f1d15\],
-.border-\[\#0f1d16\],
-.border-\[\#1a3250\],
-.border-\[\#1e385c\],
-html.light .border-\[\#1a3250\] {
+/* Borders in Light Mode */
+html.light .border-\[\#121e17\],
+html.light .border-\[\#14221b\],
+html.light .border-\[\#182b21\],
+html.light .border-\[\#13261b\],
+html.light .border-\[\#112017\],
+html.light .border-\[\#101b15\],
+html.light .border-\[\#122419\],
+html.light .border-\[\#152a1e\],
+html.light .border-\[\#162a1f\],
+html.light .border-\[\#0d1c14\],
+html.light .border-\[\#0f1d15\],
+html.light .border-\[\#0f1d16\],
+html.light .border-\[\#1a3250\],
+html.light .border-\[\#1e385c\] {
   border-color: rgba(226, 232, 240, 0.85) !important;
 }
 
-/* Typography Overrides */
-.text-slate-100, html.light .text-slate-100 { color: #0f172a !important; font-weight: 700; }
-.text-slate-200, html.light .text-slate-200 { color: #1e293b !important; font-weight: 600; }
-.text-slate-300, html.light .text-slate-300 { color: #334155 !important; }
-.text-slate-400, html.light .text-slate-400 { color: #64748b !important; }
-.text-slate-500, html.light .text-slate-500 { color: #94a3b8 !important; }
+/* Typography Overrides in Light Mode */
+html.light .text-slate-100 { color: #0f172a !important; font-weight: 700; }
+html.light .text-slate-200 { color: #1e293b !important; font-weight: 600; }
+html.light .text-slate-300 { color: #334155 !important; }
+html.light .text-slate-400 { color: #64748b !important; }
+html.light .text-slate-500 { color: #94a3b8 !important; }
 
-/* Vision Pro Vibrant Pastels for Badges & Highlights */
-.text-emerald-400,
-.text-emerald-300,
-.text-\[\#84b6e4\],
-.text-\[\#84B6E4\] {
+/* Vision Pro Vibrant Pastels for Badges & Highlights in Light Mode */
+html.light .text-emerald-400,
+html.light .text-emerald-300,
+html.light .text-\[\#84b6e4\],
+html.light .text-\[\#84B6E4\] {
   color: #2563eb !important;
 }
 
-.bg-emerald-500\/10,
-.bg-emerald-500\/15,
-.bg-emerald-500\/20,
-.bg-\[\#203B5C\]\/30,
-.bg-\[\#203B5C\]\/40,
-.bg-\[\#203B5C\]\/50 {
+html.light .bg-emerald-500\/10,
+html.light .bg-emerald-500\/15,
+html.light .bg-emerald-500\/20,
+html.light .bg-\[\#203B5C\]\/30,
+html.light .bg-\[\#203B5C\]\/40,
+html.light .bg-\[\#203B5C\]\/50 {
   background: rgba(219, 234, 254, 0.75) !important;
   border-color: rgba(147, 197, 253, 0.8) !important;
   color: #1d4ed8 !important;
 }
 
-/* Vision Pro Vibrant Gradient Buttons */
-.bg-emerald-500,
-.bg-emerald-400 {
+/* Vision Pro Vibrant Gradient Buttons in Light Mode */
+html.light .bg-emerald-500,
+html.light .bg-emerald-400 {
   background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%) !important;
   color: #ffffff !important;
   border-radius: 9999px !important;
@@ -292,15 +272,15 @@ html.light .border-\[\#1a3250\] {
   box-shadow: 0 10px 25px -4px rgba(59, 130, 246, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
 }
 
-.hover\:bg-emerald-400:hover,
-.hover\:bg-emerald-500:hover {
+html.light .hover\:bg-emerald-400:hover,
+html.light .hover\:bg-emerald-500:hover {
   background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%) !important;
   box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Tables & Dividers */
-.divide-\[\#0f1d16\] > :not([hidden]) ~ :not([hidden]),
-.divide-\[\#1a3250\] > :not([hidden]) ~ :not([hidden]) {
+/* Tables & Dividers in Light Mode */
+html.light .divide-\[\#0f1d16\] > :not([hidden]) ~ :not([hidden]),
+html.light .divide-\[\#1a3250\] > :not([hidden]) ~ :not([hidden]) {
   border-color: rgba(226, 232, 240, 0.8) !important;
 }
 
@@ -314,19 +294,6 @@ html.dark body {
     radial-gradient(at 85% 20%, rgba(59, 130, 246, 0.14) 0px, transparent 50%),
     radial-gradient(at 50% 80%, rgba(167, 139, 250, 0.1) 0px, transparent 60%) !important;
   color: #f1f5f9 !important;
-}
-
-html.dark aside {
-  background: rgba(15, 23, 42, 0.82) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-html.dark header {
-  background: rgba(15, 23, 42, 0.85) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 html.dark .bg-\[\#060b08\],
