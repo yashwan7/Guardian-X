@@ -203,7 +203,7 @@ The current MVP can be extended with:
 * Fleet management
 * Staged / canary deployment
 * Automated alerts
-* Advanced device health monitoring
+* Advanced device health monitoring .
 
 ---
 
